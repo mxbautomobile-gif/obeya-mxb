@@ -15,7 +15,7 @@
     --green: #4caf7d; --green-dim: rgba(76,175,125,0.12);
     --amber: #f0a500; --amber-dim: rgba(240,165,0,0.12);
     --red: #e05555; --red-dim: rgba(224,85,85,0.10);
-    --accent: #7c6af5;
+    --accent: #7c6af5; --accent-dim: rgba(124,106,245,0.12);
     --mono: 'DM Mono', monospace; --sans: 'Syne', sans-serif;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,10 +61,6 @@
   .hdr-left { display: flex; align-items: center; gap: 12px; }
   .hdr-logo { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
   .hdr-logo span { color: var(--accent); }
-  .hdr-tag {
-    font-family: var(--mono); font-size: 10px; padding: 3px 8px; border-radius: 4px;
-    background: var(--green-dim); color: var(--green); border: 1px solid rgba(76,175,125,0.2);
-  }
   .hdr-right { display: flex; align-items: center; gap: 12px; }
   .hdr-time { font-family: var(--mono); font-size: 11px; color: var(--text3); }
   .btn-refresh {
@@ -75,9 +71,23 @@
   .btn-cfg { background: none; border: none; color: var(--text3); font-size: 17px; cursor: pointer; padding: 4px; }
   .btn-cfg:hover { color: var(--text2); }
 
+  /* ── YEAR TABS ── */
+  .year-tabs {
+    display: flex; gap: 0; padding: 0 28px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .ytab {
+    padding: 12px 24px; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--text3); border-bottom: 2px solid transparent;
+    transition: all .2s; user-select: none;
+  }
+  .ytab:hover { color: var(--text2); }
+  .ytab.active { color: var(--text); border-bottom-color: var(--accent); }
+
   /* ── LOADING ── */
   #loading {
-    position: fixed; inset: 0; background: rgba(13,15,18,0.9);
+    position: fixed; inset: 0; background: rgba(13,15,18,0.92);
     display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 50;
   }
   .spinner { width: 26px; height: 26px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; }
@@ -108,11 +118,10 @@
   .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   .gw { display: grid; grid-template-columns: 3fr 2fr; gap: 14px; margin-bottom: 14px; }
+  .gw2 { display: grid; grid-template-columns: 2fr 3fr; gap: 14px; margin-bottom: 14px; }
 
   /* ── PANEL ── */
-  .panel {
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
-  }
+  .panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
   .panel-title {
     font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--text3);
     margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;
@@ -133,10 +142,25 @@
 
   /* ── SPLIT VN/VO ── */
   .split-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
-  .split-vn { background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; }
-  .split-vo { background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; }
+  .split-vn { background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; min-width: 0; }
+  .split-vo { background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; min-width: 0; }
   .split-legend { display: flex; gap: 16px; font-size: 12px; }
   .sdot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+
+  /* ── ENCAISSEMENT TABLE ── */
+  .enc-table { width: 100%; border-collapse: collapse; }
+  .enc-table th { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 0 8px 8px 0; border-bottom: 1px solid var(--border); text-align: left; }
+  .enc-table th:not(:first-child) { text-align: right; }
+  .enc-table td { font-size: 12px; padding: 7px 8px 7px 0; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  .enc-table td:not(:first-child) { text-align: right; font-family: var(--mono); font-size: 11px; }
+  .enc-table tr:last-child td { border-bottom: none; }
+  .enc-name { font-weight: 600; color: var(--text); font-size: 12px; }
+  .enc-sub { font-size: 10px; color: var(--text3); display: block; }
+  .pill { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 2px 6px; border-radius: 4px; }
+  .pill-blue { background: var(--blue-dim); color: var(--blue); }
+  .pill-red { background: var(--red-dim); color: var(--red); }
+  .pill-amber { background: var(--amber-dim); color: var(--amber); }
+  .pill-green { background: var(--green-dim); color: var(--green); }
 
   /* ── BRAND TABLE ── */
   .btable { width: 100%; border-collapse: collapse; }
@@ -147,12 +171,15 @@
   .btable tr:last-child td { border-bottom: none; }
   .bname { font-weight: 600; color: var(--text); font-size: 12px; }
   .bmodel { font-size: 10px; color: var(--text3); }
-  .pill { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 2px 6px; border-radius: 4px; }
-  .pill-blue { background: var(--blue-dim); color: var(--blue); }
-  .pill-green { background: var(--green-dim); color: var(--green); }
-  .pill-amber { background: var(--amber-dim); color: var(--amber); }
 
-  @media(max-width:860px) { .g2,.g3,.gw { grid-template-columns: 1fr; } main { padding: 14px; } }
+  /* ── IMPAYÉ BADGE ── */
+  .impaye-banner {
+    background: var(--red-dim); border: 1px solid rgba(224,85,85,0.2);
+    border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
+    font-size: 12px; color: var(--red); display: none; align-items: center; gap: 8px;
+  }
+
+  @media(max-width:860px) { .g2,.g3,.gw,.gw2 { grid-template-columns: 1fr; } main { padding: 14px; } }
 </style>
 </head>
 <body>
@@ -161,7 +188,7 @@
 <div id="cfg-overlay">
   <div id="cfg-box">
     <h2>⚙️ Configuration obeya</h2>
-    <p>Connecte ton Google Sheet pour alimenter l'obeya en temps réel. Ces paramètres sont sauvegardés localement.</p>
+    <p>Connecte ton Google Sheet pour alimenter l'obeya en temps réel. Ces paramètres sont sauvegardés définitivement.</p>
     <label>ID de ton Google Sheet</label>
     <input id="inp-sheet" type="text" placeholder="1IPxW0P-2zb6Czn-Y9LIkZ6bKL91Tx3amf7b9mG3x698">
     <p class="cfg-hint">Trouvé dans l'URL : docs.google.com/spreadsheets/d/<strong style="color:var(--blue)">ID_ICI</strong>/edit</p>
@@ -187,7 +214,6 @@
   <header>
     <div class="hdr-left">
       <div class="hdr-logo">MXB <span>Auto</span></div>
-      <div class="hdr-tag">2026</div>
     </div>
     <div class="hdr-right">
       <div class="hdr-time">Màj : <span id="upd-time">—</span></div>
@@ -196,46 +222,58 @@
     </div>
   </header>
 
+  <!-- YEAR TABS -->
+  <div class="year-tabs">
+    <div class="ytab" onclick="switchYear(2024)" id="tab-2024">2024</div>
+    <div class="ytab" onclick="switchYear(2025)" id="tab-2025">2025</div>
+    <div class="ytab active" onclick="switchYear(2026)" id="tab-2026">2026</div>
+  </div>
+
   <main>
+    <!-- IMPAYÉ BANNER (2025 uniquement) -->
+    <div class="impaye-banner" id="impaye-banner">
+      ⚠ <span id="impaye-txt"></span>
+    </div>
+
     <!-- KPIs -->
     <div class="kpi-row">
       <div class="kpi blue">
-        <div class="kpi-lbl">CA 2026 YTD</div>
-        <div class="kpi-val" id="k-ytd">—</div>
-        <div class="kpi-sub" id="k-ytd-vol">— véhicules</div>
+        <div class="kpi-lbl">CA <span id="k-year-lbl">YTD</span></div>
+        <div class="kpi-val" id="k-ca">—</div>
+        <div class="kpi-sub" id="k-vol">— véhicules</div>
       </div>
       <div class="kpi amber">
-        <div class="kpi-lbl">Projection 2026</div>
+        <div class="kpi-lbl" id="k-proj-lbl">Projection annuelle</div>
         <div class="kpi-val" id="k-proj">—</div>
-        <div class="kpi-sub" id="k-proj-sub">sur base des mois complets</div>
+        <div class="kpi-sub" id="k-proj-sub">—</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-lbl">En attente encaiss.</div>
+        <div class="kpi-val" id="k-enc">—</div>
+        <div class="kpi-sub" id="k-enc-vol">— opérations</div>
       </div>
       <div class="kpi accent">
         <div class="kpi-lbl">Marge moy. / véhicule</div>
         <div class="kpi-val" id="k-marge">—</div>
-        <div class="kpi-sub">YTD 2026</div>
+        <div class="kpi-sub" id="k-marge-sub">—</div>
       </div>
       <div class="kpi green">
-        <div class="kpi-lbl">Meilleur mois 2026</div>
+        <div class="kpi-lbl">Meilleur mois</div>
         <div class="kpi-val" id="k-best">—</div>
         <div class="kpi-sub" id="k-best-sub">—</div>
-      </div>
-      <div class="kpi red">
-        <div class="kpi-lbl">Mois en cours</div>
-        <div class="kpi-val" id="k-cur">—</div>
-        <div class="kpi-sub" id="k-cur-sub">—</div>
       </div>
     </div>
 
     <!-- Graphe CA mensuel + Split VN/VO -->
     <div class="gw">
       <div class="panel">
-        <div class="panel-title">Évolution CA mensuel <em id="chart-years">2025 vs 2026</em></div>
+        <div class="panel-title">Évolution CA mensuel <em id="chart-sub">vs année précédente</em></div>
         <div class="chart-wrap" style="height:210px">
           <canvas id="cCA"></canvas>
         </div>
       </div>
       <div class="panel">
-        <div class="panel-title">Split VN / VO <em>2026 YTD</em></div>
+        <div class="panel-title">Split VN / VO <em id="split-year-lbl">YTD</em></div>
         <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
           <div>
             <div style="font-size:32px;font-weight:700;font-family:var(--mono);color:var(--blue)" id="s-vn">—</div>
@@ -259,21 +297,43 @@
       </div>
     </div>
 
+    <!-- Encaissement en attente -->
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="panel-title">
+        CA en attente d'encaissement
+        <em id="enc-total-lbl">—</em>
+      </div>
+      <div class="g3" style="margin-bottom:0;">
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;">Par client</div>
+          <div id="enc-clients"></div>
+        </div>
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;">Par fournisseur</div>
+          <div id="enc-suppliers"></div>
+        </div>
+        <div>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;">Par marque / modèle</div>
+          <div id="enc-brands"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- Top clients + Top fournisseurs -->
     <div class="g2">
       <div class="panel">
-        <div class="panel-title">Top clients <em>2026 YTD — volume & CA</em></div>
+        <div class="panel-title">Top clients <em id="top-cli-lbl">YTD</em></div>
         <div id="bar-clients"></div>
       </div>
       <div class="panel">
-        <div class="panel-title">Top fournisseurs <em>2026 YTD — volume & CA</em></div>
+        <div class="panel-title">Top fournisseurs <em id="top-sup-lbl">YTD</em></div>
         <div id="bar-suppliers"></div>
       </div>
     </div>
 
     <!-- Marques / modèles -->
     <div class="panel" style="margin-bottom:14px;">
-      <div class="panel-title">Marques & modèles <em>2026 YTD</em></div>
+      <div class="panel-title">Marques & modèles <em id="brand-lbl">YTD</em></div>
       <div style="overflow-x:auto;">
         <table class="btable">
           <thead>
@@ -296,7 +356,10 @@
 <script>
 /* ── CONFIG ── */
 let CFG = {};
-const LS = 'mxb_cfg_v2';
+const LS = 'mxb_cfg_v3';
+let ALL_DATA = null;
+let CUR_YEAR = 2026;
+let chartCA = null;
 
 function loadConfig() {
   try { CFG = JSON.parse(localStorage.getItem(LS)||'{}'); } catch(e) { CFG={}; }
@@ -320,32 +383,27 @@ function saveConfig() {
 }
 
 /* ── FETCH ── */
-let chartCA = null;
-
 async function loadData() {
   const ld = document.getElementById('loading');
   ld.style.display='flex';
   document.getElementById('load-msg').textContent = 'Lecture de "List of cars sold"...';
   try {
-    // Lire tout l'onglet "List of cars sold" (jusqu'à 3000 lignes)
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${encodeURIComponent("List of cars sold!A1:H3000")}?key=${CFG.apiKey}`;
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${encodeURIComponent("List of cars sold!A1:I3000")}?key=${CFG.apiKey}`;
     const res = await fetch(url);
-    if (!res.ok) {
-      const txt = await res.text();
-      throw new Error(`API Sheets erreur ${res.status}: ${txt.slice(0,120)}`);
-    }
+    if (!res.ok) throw new Error(`Erreur API ${res.status}: ${(await res.text()).slice(0,120)}`);
     const data = await res.json();
     ld.style.display='none';
-    render(parse(data.values||[]));
+    ALL_DATA = parseAll(data.values||[]);
     document.getElementById('upd-time').textContent = new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+    renderYear(CUR_YEAR);
   } catch(e) {
     ld.style.display='none';
-    alert('Erreur lecture Sheet :\n' + e.message + '\n\nVérifie que :\n1. Le Sheet est partagé en lecture publique\n2. La clé API est correcte et l\'API Sheets est activée\n3. Le nom de l\'onglet est exactement "List of cars sold"');
+    alert('Erreur lecture Sheet :\n' + e.message + '\n\nVérifie :\n1. Sheet partagé en lecture publique\n2. Clé API correcte + API Sheets activée\n3. Onglet nommé exactement "List of cars sold"');
     document.getElementById('cfg-overlay').style.display='flex';
   }
 }
 
-/* ── PARSE ──
+/* ── PARSE ALL
    Col A: DELIVERY MONTH (MM/YYYY)
    Col B: TYPE (VN/VO)
    Col C: BRAND
@@ -354,161 +412,186 @@ async function loadData() {
    Col F: SUPPLIER
    Col G: CUSTOMER
    Col H: CA (€)
-*/
-function parse(rows) {
-  if (rows.length < 2) return null;
-  // Ignore header (row 0)
-  const data = rows.slice(1).map(r => ({
-    month: (r[0]||'').trim(),   // "04/2024"
-    type:  (r[1]||'').trim().toUpperCase(),
-    brand: (r[2]||'').trim().toUpperCase(),
-    model: (r[3]||'').trim().toUpperCase(),
-    vin:   (r[4]||'').trim(),
+   Col I: statut encaissement ("pas encaissé" = en attente, vide = ok)
+── */
+function parseAll(rows) {
+  if (rows.length < 2) return {};
+  const records = rows.slice(1).map(r => ({
+    month:    (r[0]||'').trim(),
+    type:     (r[1]||'').trim().toUpperCase(),
+    brand:    (r[2]||'').trim().toUpperCase(),
+    model:    (r[3]||'').trim().toUpperCase(),
+    vin:      (r[4]||'').trim(),
     supplier: (r[5]||'').trim(),
     customer: (r[6]||'').trim(),
-    ca: parseMoney(r[7]||'0'),
+    ca:       parseMoney(r[7]||'0'),
+    pending:  (r[8]||'').trim().toLowerCase() === 'pas encaissé',
   })).filter(r => r.month && r.ca > 0);
 
-  const rows26 = data.filter(r => r.month.endsWith('2026'));
-  const rows25 = data.filter(r => r.month.endsWith('2025'));
-
-  // Mois complets 2026 (tous sauf mois en cours)
-  const now = new Date();
-  const curMonthKey = String(now.getMonth()+1).padStart(2,'0') + '/2026';
-  const completeMonths26 = rows26.filter(r => r.month !== curMonthKey);
-
-  // CA YTD 2026
-  const caYTD = rows26.reduce((s,r)=>s+r.ca,0);
-  const volYTD = rows26.length;
-
-  // Projection : CA mois complets / nb mois complets * 12
-  const monthsSet = [...new Set(completeMonths26.map(r=>r.month))];
-  const nbComplete = monthsSet.length;
-  const caComplete = completeMonths26.reduce((s,r)=>s+r.ca,0);
-  const proj = nbComplete > 0 ? Math.round(caComplete/nbComplete*12) : 0;
-
-  // Mois en cours 2026
-  const curRows = rows26.filter(r=>r.month===curMonthKey);
-  const caCur = curRows.reduce((s,r)=>s+r.ca,0);
-  const volCur = curRows.length;
-
-  // Meilleur mois 2026
-  const byMonth26 = groupBy(rows26,'month');
-  let bestMonth='', bestCA=0;
-  Object.entries(byMonth26).forEach(([m,arr])=>{
-    const ca = arr.reduce((s,r)=>s+r.ca,0);
-    if(ca>bestCA){bestCA=ca;bestMonth=m;}
+  // Sépare par année
+  const byYear = {};
+  [2024, 2025, 2026].forEach(y => {
+    byYear[y] = records.filter(r => r.month.endsWith(String(y)));
   });
-
-  // VN/VO 2026
-  const vn26 = rows26.filter(r=>r.type==='VN');
-  const vo26 = rows26.filter(r=>r.type==='VO');
-  const vnCA = vn26.reduce((s,r)=>s+r.ca,0);
-  const voCA = vo26.reduce((s,r)=>s+r.ca,0);
-
-  // Mensuel 2025 & 2026 pour graphe
-  const byM25 = groupBy(rows25,'month');
-  const byM26 = groupBy(rows26,'month');
-  const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
-  const series25 = MONTHS.map(m => {
-    const arr = byM25[m+'/2025']||[];
-    return arr.length ? arr.reduce((s,r)=>s+r.ca,0) : null;
-  });
-  const series26 = MONTHS.map(m => {
-    const arr = byM26[m+'/2026']||[];
-    return arr.length ? arr.reduce((s,r)=>s+r.ca,0) : null;
-  });
-
-  // Top clients 2026
-  const byCli = groupBy(rows26,'customer');
-  const topClients = Object.entries(byCli).map(([name,arr])=>({
-    name, vol:arr.length, ca:arr.reduce((s,r)=>s+r.ca,0)
-  })).sort((a,b)=>b.ca-a.ca).slice(0,8);
-
-  // Top fournisseurs 2026
-  const byFurn = groupBy(rows26,'supplier');
-  const topSuppliers = Object.entries(byFurn).map(([name,arr])=>({
-    name, vol:arr.length, ca:arr.reduce((s,r)=>s+r.ca,0)
-  })).sort((a,b)=>b.ca-a.ca).slice(0,8);
-
-  // Marques / modèles 2026
-  const byBrand = {};
-  rows26.forEach(r => {
-    const k = r.brand+'|'+(r.model||'—');
-    if (!byBrand[k]) byBrand[k]={vol:0,ca:0};
-    byBrand[k].vol++; byBrand[k].ca+=r.ca;
-  });
-  const topBrands = Object.entries(byBrand).map(([k,v])=>({
-    brand:k.split('|')[0], model:k.split('|')[1], ...v
-  })).sort((a,b)=>b.ca-a.ca).slice(0,12);
-
-  return { caYTD, volYTD, proj, nbComplete, caCur, volCur, curMonthKey,
-    bestMonth, bestCA, vn:vn26.length, vo:vo26.length, vnCA, voCA,
-    series25, series26, topClients, topSuppliers, topBrands };
+  return { records, byYear };
 }
 
-/* ── RENDER ── */
-function render(d) {
-  if (!d) return;
+/* ── SWITCH YEAR ── */
+function switchYear(y) {
+  CUR_YEAR = y;
+  [2024,2025,2026].forEach(yr => {
+    el('tab-'+yr).classList.toggle('active', yr===y);
+  });
+  renderYear(y);
+}
 
-  // KPIs
-  set('k-ytd', fmt(d.caYTD));
-  set('k-ytd-vol', d.volYTD + ' véhicules');
-  set('k-proj', fmt(d.proj));
-  set('k-proj-sub', `base ${d.nbComplete} mois complets`);
-  const marge = d.volYTD > 0 ? Math.round(d.caYTD/d.volYTD) : 0;
-  set('k-marge', fmt(marge));
-  set('k-best', fmt(d.bestCA));
-  set('k-best-sub', d.bestMonth || '—');
-  set('k-cur', fmt(d.caCur));
-  set('k-cur-sub', (d.volCur||0)+' vh · '+d.curMonthKey);
+/* ── RENDER YEAR ── */
+function renderYear(y) {
+  if (!ALL_DATA) return;
+  const rows = ALL_DATA.byYear[y] || [];
+  const prevRows = ALL_DATA.byYear[y-1] || [];
+  const isCurrentYear = y === new Date().getFullYear();
+  const yearStr = String(y);
 
-  // Split VN/VO
-  const tot = d.vn+d.vo||1;
-  const vnP = Math.round(d.vn/tot*100);
+  // Mois en cours
+  const now = new Date();
+  const curMonthKey = String(now.getMonth()+1).padStart(2,'0') + '/' + y;
+  const completeRows = isCurrentYear ? rows.filter(r=>r.month!==curMonthKey) : rows;
+  const completeMonths = [...new Set(completeRows.map(r=>r.month))];
+
+  const caTotal = rows.reduce((s,r)=>s+r.ca,0);
+  const volTotal = rows.length;
+
+  // Projection
+  const caComplete = completeRows.reduce((s,r)=>s+r.ca,0);
+  const nbComplete = completeMonths.length;
+  const proj = isCurrentYear && nbComplete > 0 ? Math.round(caComplete/nbComplete*12) : caTotal;
+
+  // En attente encaissement
+  const pendingRows = rows.filter(r=>r.pending);
+  const caPending = pendingRows.reduce((s,r)=>s+r.ca,0);
+
+  // Meilleur mois
+  const byM = groupBy(rows,'month');
+  let bestM='', bestCA=0;
+  Object.entries(byM).forEach(([m,arr])=>{ const ca=arr.reduce((s,r)=>s+r.ca,0); if(ca>bestCA){bestCA=ca;bestM=m;} });
+
+  // VN/VO
+  const vnRows = rows.filter(r=>r.type==='VN');
+  const voRows = rows.filter(r=>r.type==='VO');
+  const vnCA = vnRows.reduce((s,r)=>s+r.ca,0);
+  const voCA = voRows.reduce((s,r)=>s+r.ca,0);
+
+  // Séries mensuelles
+  const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  const series = MONTHS.map(m=>{ const arr=byM[m+'/'+y]||[]; return arr.length?arr.reduce((s,r)=>s+r.ca,0):null; });
+  const seriesPrev = MONTHS.map(m=>{ const arr=groupBy(prevRows,'month')[m+'/'+(y-1)]||[]; return arr.length?arr.reduce((s,r)=>s+r.ca,0):null; });
+
+  // Top clients
+  const byCli = groupBy(rows,'customer');
+  const topClients = Object.entries(byCli).map(([name,arr])=>({name,vol:arr.length,ca:arr.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,8);
+
+  // Top suppliers
+  const bySup = groupBy(rows,'supplier');
+  const topSuppliers = Object.entries(bySup).map(([name,arr])=>({name,vol:arr.length,ca:arr.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,8);
+
+  // Brands
+  const byBrand = {};
+  rows.forEach(r=>{ const k=r.brand+'|'+(r.model||'—'); if(!byBrand[k])byBrand[k]={vol:0,ca:0}; byBrand[k].vol++;byBrand[k].ca+=r.ca; });
+  const topBrands = Object.entries(byBrand).map(([k,v])=>({brand:k.split('|')[0],model:k.split('|')[1],...v})).sort((a,b)=>b.ca-a.ca).slice(0,12);
+
+  // Encaissement en attente — par client / supplier / brand
+  const encByCli = groupBy(pendingRows,'customer');
+  const encBySup = groupBy(pendingRows,'supplier');
+  const encByBrand = {};
+  pendingRows.forEach(r=>{ const k=r.brand+'|'+(r.model||'—'); if(!encByBrand[k])encByBrand[k]={vol:0,ca:0}; encByBrand[k].vol++;encByBrand[k].ca+=r.ca; });
+
+  const encClients = Object.entries(encByCli).map(([name,arr])=>({name,vol:arr.length,ca:arr.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,6);
+  const encSuppliers = Object.entries(encBySup).map(([name,arr])=>({name,vol:arr.length,ca:arr.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,6);
+  const encBrands = Object.entries(encByBrand).map(([k,v])=>({brand:k.split('|')[0],model:k.split('|')[1],...v})).sort((a,b)=>b.ca-a.ca).slice(0,6);
+
+  // Impayés 2025 (vhs pas encaissées de 2025 = impayés)
+  const banner = el('impaye-banner');
+  if (y === 2025) {
+    const imp = rows.filter(r=>r.pending);
+    const caImp = imp.reduce((s,r)=>s+r.ca,0);
+    if (caImp > 0) {
+      el('impaye-txt').textContent = `${imp.length} véhicule(s) non encaissé(s) en 2025 — ${fmt(caImp)} considérés impayés`;
+      banner.style.display='flex';
+    } else { banner.style.display='none'; }
+  } else { banner.style.display='none'; }
+
+  /* ── DOM ── */
+  set('k-year-lbl', isCurrentYear ? 'YTD' : yearStr);
+  set('k-ca', fmt(caTotal));
+  set('k-vol', volTotal + ' véhicules');
+  set('k-proj-lbl', isCurrentYear ? 'Projection annuelle' : 'CA total '+yearStr);
+  set('k-proj', fmt(proj));
+  set('k-proj-sub', isCurrentYear ? `base ${nbComplete} mois complets` : volTotal+' véhicules livrés');
+  set('k-enc', fmt(caPending));
+  set('k-enc-vol', pendingRows.length + ' opération(s)');
+  set('k-marge', fmt(volTotal>0?Math.round(caTotal/volTotal):0));
+  set('k-marge-sub', yearStr);
+  set('k-best', fmt(bestCA));
+  set('k-best-sub', bestM||'—');
+  set('split-year-lbl', isCurrentYear ? 'YTD '+yearStr : yearStr);
+  set('top-cli-lbl', isCurrentYear ? 'YTD '+yearStr : yearStr);
+  set('top-sup-lbl', isCurrentYear ? 'YTD '+yearStr : yearStr);
+  set('brand-lbl', isCurrentYear ? 'YTD '+yearStr : yearStr);
+  set('enc-total-lbl', fmt(caPending) + ' · ' + pendingRows.length + ' vh');
+
+  // VN/VO
+  const tot = (vnRows.length+voRows.length)||1;
+  const vnP = Math.round(vnRows.length/tot*100);
   const voP = 100-vnP;
-  set('s-vn', d.vn); set('s-vo', d.vo);
-  set('s-vn-ca', fmt(d.vnCA)); set('s-vo-ca', fmt(d.voCA));
+  set('s-vn', vnRows.length); set('s-vo', voRows.length);
+  set('s-vn-ca', fmt(vnCA)); set('s-vo-ca', fmt(voCA));
   set('s-vn-pct', vnP+'%'); set('s-vo-pct', voP+'%');
-  el('split-vn').style.width = vnP+'%'; el('split-vn').textContent = vnP+'% VN';
-  el('split-vo').style.width = voP+'%'; el('split-vo').textContent = voP+'% VO';
+  el('split-vn').style.width=vnP+'%'; el('split-vn').textContent=vnP+'% VN';
+  el('split-vo').style.width=voP+'%'; el('split-vo').textContent=voP+'% VO';
 
-  // Chart CA mensuel
-  const lbls = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
-  if (chartCA) chartCA.destroy();
-  chartCA = new Chart(el('cCA'), {
+  // Chart
+  const lbls=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+  set('chart-sub', 'vs '+(y-1));
+  if(chartCA) chartCA.destroy();
+  chartCA = new Chart(el('cCA'),{
     type:'line',
     data:{
       labels:lbls,
       datasets:[
-        { label:'2025', data:d.series25, borderColor:'rgba(59,141,245,0.4)', backgroundColor:'rgba(59,141,245,0.05)',
-          borderWidth:1.5, pointRadius:2, tension:.35, fill:true, spanGaps:false, borderDash:[4,3] },
-        { label:'2026', data:d.series26, borderColor:'#3b8df5', backgroundColor:'rgba(59,141,245,0.10)',
+        { label:String(y-1), data:seriesPrev, borderColor:'rgba(139,143,168,0.35)', backgroundColor:'transparent',
+          borderWidth:1.5, pointRadius:2, tension:.35, fill:false, spanGaps:false, borderDash:[4,3] },
+        { label:String(y), data:series, borderColor:'#3b8df5', backgroundColor:'rgba(59,141,245,0.08)',
           borderWidth:2.5, pointRadius:4, pointBackgroundColor:'#3b8df5', tension:.35, fill:true, spanGaps:false }
       ]
     },
     options:{
       responsive:true, maintainAspectRatio:false,
       plugins:{
-        legend:{ display:true, labels:{ color:'#8a8fa8', font:{size:11,family:'DM Mono'}, boxWidth:12, padding:16 } },
-        tooltip:{ mode:'index', intersect:false, callbacks:{ label:ctx=>' '+ctx.dataset.label+' : '+fmtN(ctx.raw)+' €' } }
+        legend:{display:true, labels:{color:'#8a8fa8',font:{size:11,family:'DM Mono'},boxWidth:12,padding:16}},
+        tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>' '+ctx.dataset.label+' : '+fmtN(ctx.raw)+' €'}}
       },
       scales:{
-        x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#454a5e',font:{size:10}} },
-        y:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#454a5e',font:{size:10}, callback:v=>(v>=1000?(v/1000).toFixed(0)+'k':v)+'€'} }
+        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#454a5e',font:{size:10}}},
+        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#454a5e',font:{size:10},callback:v=>(v>=1000?(v/1000).toFixed(0)+'k':v)+'€'}}
       }
     }
   });
 
-  // Bars clients
-  renderBars('bar-clients', d.topClients, '#3b8df5');
-  renderBars('bar-suppliers', d.topSuppliers, '#4caf7d');
+  // Bars
+  renderBars('bar-clients', topClients, '#3b8df5');
+  renderBars('bar-suppliers', topSuppliers, '#4caf7d');
+
+  // Encaissement bars
+  renderEncBars('enc-clients', encClients, '#e05555');
+  renderEncBars('enc-suppliers', encSuppliers, '#e05555');
+  renderEncBrandBars('enc-brands', encBrands);
 
   // Brand table
-  const tbody = el('brand-tbody'); tbody.innerHTML='';
-  d.topBrands.forEach(b=>{
-    const moy = b.vol>0?Math.round(b.ca/b.vol):0;
-    const pct = d.caYTD>0?(b.ca/d.caYTD*100).toFixed(1):0;
+  const tbody=el('brand-tbody'); tbody.innerHTML='';
+  topBrands.forEach(b=>{
+    const moy=b.vol>0?Math.round(b.ca/b.vol):0;
+    const pct=caTotal>0?(b.ca/caTotal*100).toFixed(1):0;
     tbody.innerHTML+=`<tr>
       <td><span class="bname">${b.brand}</span> <span class="bmodel">${b.model}</span></td>
       <td>${b.vol}</td><td>${fmt(b.ca)}</td>
@@ -519,10 +602,11 @@ function render(d) {
 }
 
 function renderBars(id, items, color) {
-  const wrap = el(id); wrap.innerHTML='';
-  const max = items[0]?.ca||1;
+  const wrap=el(id); wrap.innerHTML='';
+  if(!items.length){wrap.innerHTML='<div style="font-size:12px;color:var(--text3);padding:8px 0;">Aucune donnée</div>';return;}
+  const max=items[0]?.ca||1;
   items.forEach(({name,vol,ca})=>{
-    const p = Math.round(ca/max*100);
+    const p=Math.round(ca/max*100);
     wrap.innerHTML+=`<div class="bar-row">
       <div class="bar-name" title="${name}">${name}</div>
       <div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${color};opacity:.75;"></div></div>
@@ -532,28 +616,51 @@ function renderBars(id, items, color) {
   });
 }
 
+function renderEncBars(id, items, color) {
+  const wrap=el(id); wrap.innerHTML='';
+  if(!items.length){wrap.innerHTML='<div style="font-size:12px;color:var(--green);padding:4px 0;">✓ Tout encaissé</div>';return;}
+  const max=items[0]?.ca||1;
+  items.forEach(({name,vol,ca})=>{
+    const p=Math.round(ca/max*100);
+    wrap.innerHTML+=`<div class="bar-row">
+      <div class="bar-name" title="${name}">${name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${color};opacity:.7;"></div></div>
+      <div class="bar-vol">${vol}vh</div>
+      <div class="bar-val">${fmt(ca)}</div>
+    </div>`;
+  });
+}
+
+function renderEncBrandBars(id, items) {
+  const wrap=el(id); wrap.innerHTML='';
+  if(!items.length){wrap.innerHTML='<div style="font-size:12px;color:var(--green);padding:4px 0;">✓ Tout encaissé</div>';return;}
+  const max=items[0]?.ca||1;
+  items.forEach(({brand,model,vol,ca})=>{
+    const p=Math.round(ca/max*100);
+    const name=brand+(model&&model!=='—'?' '+model:'');
+    wrap.innerHTML+=`<div class="bar-row">
+      <div class="bar-name" title="${name}">${name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${p}%;background:#e05555;opacity:.7;"></div></div>
+      <div class="bar-vol">${vol}vh</div>
+      <div class="bar-val">${fmt(ca)}</div>
+    </div>`;
+  });
+}
+
 /* ── UTILS ── */
-function groupBy(arr, key) {
-  return arr.reduce((acc,r)=>{ const k=r[key]; if(!acc[k])acc[k]=[]; acc[k].push(r); return acc; },{});
-}
-function parseMoney(s) {
-  if(!s) return 0;
-  return parseFloat(String(s).replace(/[€\s]/g,'').replace(/\./g,'').replace(',','.')) || 0;
-}
-function fmt(n) {
-  if(!n&&n!==0) return '—';
-  return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
-}
-function fmtN(n) { return n!=null ? new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(n) : '—'; }
-function el(id) { return document.getElementById(id); }
-function set(id,v) { const e=el(id); if(e) e.textContent=v; }
+function groupBy(arr,key){return arr.reduce((acc,r)=>{const k=r[key];if(!acc[k])acc[k]=[];acc[k].push(r);return acc;},{});}
+function parseMoney(s){if(!s)return 0;return parseFloat(String(s).replace(/[€\s]/g,'').replace(/\./g,'').replace(',','.'))||0;}
+function fmt(n){if(!n&&n!==0)return'—';return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);}
+function fmtN(n){return n!=null?new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(n):'—';}
+function el(id){return document.getElementById(id);}
+function set(id,v){const e=el(id);if(e)e.textContent=v;}
 
 /* ── AUTO-REFRESH 5 min ── */
-setInterval(()=>{ if(el('app').style.display!=='none') loadData(); }, 5*60*1000);
+setInterval(()=>{if(el('app').style.display!=='none')loadData();},5*60*1000);
 
 /* ── INIT ── */
 loadConfig();
-if (CFG.sheetId && CFG.apiKey) {
+if(CFG.sheetId&&CFG.apiKey){
   el('cfg-overlay').style.display='none';
   el('app').style.display='block';
   loadData();
