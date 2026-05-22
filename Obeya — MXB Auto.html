@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obeya — MXB Auto</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0d0f12; --bg2: #13161b; --bg3: #1a1e26;
+    --border: rgba(255,255,255,0.07); --border2: rgba(255,255,255,0.13);
+    --text: #e8eaf0; --text2: #8a8fa8; --text3: #454a5e;
+    --blue: #3b8df5; --blue-dim: rgba(59,141,245,0.12);
+    --green: #4caf7d; --green-dim: rgba(76,175,125,0.12);
+    --amber: #f0a500; --amber-dim: rgba(240,165,0,0.12);
+    --red: #e05555; --red-dim: rgba(224,85,85,0.10);
+    --accent: #7c6af5;
+    --mono: 'DM Mono', monospace; --sans: 'Syne', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+
+  /* ── CONFIG ── */
+  #cfg-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(0,0,0,0.88); display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(6px);
+  }
+  #cfg-box {
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 16px; padding: 36px 40px; width: 540px; max-width: 95vw;
+  }
+  #cfg-box h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  #cfg-box p { font-size: 13px; color: var(--text2); margin-bottom: 24px; line-height: 1.6; }
+  #cfg-box label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: 5px; }
+  #cfg-box input {
+    width: 100%; padding: 10px 14px; background: var(--bg3);
+    border: 1px solid var(--border2); border-radius: 8px;
+    color: var(--text); font-family: var(--mono); font-size: 13px; margin-bottom: 16px; outline: none;
+    transition: border-color .2s;
+  }
+  #cfg-box input:focus { border-color: var(--accent); }
+  .cfg-hint { font-size: 11px; color: var(--text3); margin-top: -10px; margin-bottom: 16px; line-height: 1.5; }
+  .cfg-hint a { color: var(--blue); text-decoration: none; }
+  #cfg-btn {
+    width: 100%; padding: 13px; background: var(--accent); border: none; border-radius: 8px;
+    color: #fff; font-family: var(--sans); font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity .2s;
+  }
+  #cfg-btn:hover { opacity: .85; }
+  #cfg-error { font-size: 12px; color: var(--red); margin-top: 10px; display: none; }
+
+  /* ── APP ── */
+  #app { display: none; }
+
+  header {
+    border-bottom: 1px solid var(--border); padding: 0 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 54px; background: var(--bg); position: sticky; top: 0; z-index: 10;
+  }
+  .hdr-left { display: flex; align-items: center; gap: 12px; }
+  .hdr-logo { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+  .hdr-logo span { color: var(--accent); }
+  .hdr-tag {
+    font-family: var(--mono); font-size: 10px; padding: 3px 8px; border-radius: 4px;
+    background: var(--green-dim); color: var(--green); border: 1px solid rgba(76,175,125,0.2);
+  }
+  .hdr-right { display: flex; align-items: center; gap: 12px; }
+  .hdr-time { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+  .btn-refresh {
+    background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px;
+    padding: 6px 12px; color: var(--text2); font-size: 12px; cursor: pointer; transition: all .2s;
+  }
+  .btn-refresh:hover { color: var(--text); }
+  .btn-cfg { background: none; border: none; color: var(--text3); font-size: 17px; cursor: pointer; padding: 4px; }
+  .btn-cfg:hover { color: var(--text2); }
+
+  /* ── LOADING ── */
+  #loading {
+    position: fixed; inset: 0; background: rgba(13,15,18,0.9);
+    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 50;
+  }
+  .spinner { width: 26px; height: 26px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #loading p { font-size: 12px; color: var(--text2); font-family: var(--mono); }
+
+  main { padding: 22px 28px 48px; max-width: 1360px; margin: 0 auto; }
+
+  /* ── KPI ROW ── */
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; margin-bottom: 18px; }
+  .kpi {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px; position: relative; overflow: hidden;
+  }
+  .kpi::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 12px 12px 0 0;
+  }
+  .kpi.blue::after { background: var(--blue); }
+  .kpi.green::after { background: var(--green); }
+  .kpi.amber::after { background: var(--amber); }
+  .kpi.accent::after { background: var(--accent); }
+  .kpi.red::after { background: var(--red); }
+  .kpi-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: 8px; }
+  .kpi-val { font-size: 24px; font-weight: 700; font-family: var(--mono); line-height: 1; color: var(--text); }
+  .kpi-sub { font-size: 11px; color: var(--text2); margin-top: 5px; font-family: var(--mono); }
+
+  /* ── GRID ── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .gw { display: grid; grid-template-columns: 3fr 2fr; gap: 14px; margin-bottom: 14px; }
+
+  /* ── PANEL ── */
+  .panel {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+  }
+  .panel-title {
+    font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--text3);
+    margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .panel-title em { font-style: normal; font-family: var(--mono); color: var(--text2); font-size: 11px; text-transform: none; letter-spacing: 0; }
+
+  /* ── CHART ── */
+  .chart-wrap { position: relative; width: 100%; }
+
+  /* ── BAR ROWS ── */
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-name { font-size: 12px; color: var(--text2); width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
+  .bar-vol { font-family: var(--mono); font-size: 10px; color: var(--text3); width: 32px; text-align: right; flex-shrink: 0; }
+  .bar-val { font-family: var(--mono); font-size: 11px; color: var(--text2); width: 64px; text-align: right; flex-shrink: 0; }
+
+  /* ── SPLIT VN/VO ── */
+  .split-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
+  .split-vn { background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; }
+  .split-vo { background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; }
+  .split-legend { display: flex; gap: 16px; font-size: 12px; }
+  .sdot { display: inline-block; width: 7px; height: 7px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+
+  /* ── BRAND TABLE ── */
+  .btable { width: 100%; border-collapse: collapse; }
+  .btable th { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); padding: 0 0 8px; border-bottom: 1px solid var(--border); text-align: left; }
+  .btable th:not(:first-child) { text-align: right; }
+  .btable td { font-size: 12px; padding: 7px 0; border-bottom: 1px solid var(--border); color: var(--text2); }
+  .btable td:not(:first-child) { text-align: right; font-family: var(--mono); font-size: 11px; }
+  .btable tr:last-child td { border-bottom: none; }
+  .bname { font-weight: 600; color: var(--text); font-size: 12px; }
+  .bmodel { font-size: 10px; color: var(--text3); }
+  .pill { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 2px 6px; border-radius: 4px; }
+  .pill-blue { background: var(--blue-dim); color: var(--blue); }
+  .pill-green { background: var(--green-dim); color: var(--green); }
+  .pill-amber { background: var(--amber-dim); color: var(--amber); }
+
+  @media(max-width:860px) { .g2,.g3,.gw { grid-template-columns: 1fr; } main { padding: 14px; } }
+</style>
+</head>
+<body>
+
+<!-- CONFIG -->
+<div id="cfg-overlay">
+  <div id="cfg-box">
+    <h2>⚙️ Configuration obeya</h2>
+    <p>Connecte ton Google Sheet pour alimenter l'obeya en temps réel. Ces paramètres sont sauvegardés localement.</p>
+    <label>ID de ton Google Sheet</label>
+    <input id="inp-sheet" type="text" placeholder="1IPxW0P-2zb6Czn-Y9LIkZ6bKL91Tx3amf7b9mG3x698">
+    <p class="cfg-hint">Trouvé dans l'URL : docs.google.com/spreadsheets/d/<strong style="color:var(--blue)">ID_ICI</strong>/edit</p>
+    <label>Clé API Google Sheets</label>
+    <input id="inp-apikey" type="text" placeholder="AIza...">
+    <p class="cfg-hint">
+      <a href="https://console.cloud.google.com/apis/credentials" target="_blank">console.cloud.google.com</a>
+      → Créer une clé API → Restreindre à "Google Sheets API"
+    </p>
+    <button id="cfg-btn" onclick="saveConfig()">Lancer l'obeya →</button>
+    <div id="cfg-error"></div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="spinner"></div>
+  <p id="load-msg">Lecture du Google Sheet...</p>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="hdr-left">
+      <div class="hdr-logo">MXB <span>Auto</span></div>
+      <div class="hdr-tag">2026</div>
+    </div>
+    <div class="hdr-right">
+      <div class="hdr-time">Màj : <span id="upd-time">—</span></div>
+      <button class="btn-refresh" onclick="loadData()">↺ Actualiser</button>
+      <button class="btn-cfg" onclick="document.getElementById('cfg-overlay').style.display='flex'" title="Config">⚙</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi blue">
+        <div class="kpi-lbl">CA 2026 YTD</div>
+        <div class="kpi-val" id="k-ytd">—</div>
+        <div class="kpi-sub" id="k-ytd-vol">— véhicules</div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-lbl">Projection 2026</div>
+        <div class="kpi-val" id="k-proj">—</div>
+        <div class="kpi-sub" id="k-proj-sub">sur base des mois complets</div>
+      </div>
+      <div class="kpi accent">
+        <div class="kpi-lbl">Marge moy. / véhicule</div>
+        <div class="kpi-val" id="k-marge">—</div>
+        <div class="kpi-sub">YTD 2026</div>
+      </div>
+      <div class="kpi green">
+        <div class="kpi-lbl">Meilleur mois 2026</div>
+        <div class="kpi-val" id="k-best">—</div>
+        <div class="kpi-sub" id="k-best-sub">—</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-lbl">Mois en cours</div>
+        <div class="kpi-val" id="k-cur">—</div>
+        <div class="kpi-sub" id="k-cur-sub">—</div>
+      </div>
+    </div>
+
+    <!-- Graphe CA mensuel + Split VN/VO -->
+    <div class="gw">
+      <div class="panel">
+        <div class="panel-title">Évolution CA mensuel <em id="chart-years">2025 vs 2026</em></div>
+        <div class="chart-wrap" style="height:210px">
+          <canvas id="cCA"></canvas>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Split VN / VO <em>2026 YTD</em></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
+          <div>
+            <div style="font-size:32px;font-weight:700;font-family:var(--mono);color:var(--blue)" id="s-vn">—</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">véhicules VN</div>
+            <div style="font-size:13px;font-family:var(--mono);color:var(--text2);margin-top:4px;" id="s-vn-ca">—</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:32px;font-weight:700;font-family:var(--mono);color:var(--accent)" id="s-vo">—</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:2px;">véhicules VO</div>
+            <div style="font-size:13px;font-family:var(--mono);color:var(--text2);margin-top:4px;" id="s-vo-ca">—</div>
+          </div>
+        </div>
+        <div class="split-bar">
+          <div class="split-vn" id="split-vn" style="width:80%">VN</div>
+          <div class="split-vo" id="split-vo" style="width:20%">VO</div>
+        </div>
+        <div class="split-legend">
+          <div><span class="sdot" style="background:var(--blue)"></span>VN <span style="color:var(--text2);font-family:var(--mono);font-size:11px;" id="s-vn-pct">—%</span></div>
+          <div><span class="sdot" style="background:var(--accent)"></span>VO <span style="color:var(--text2);font-family:var(--mono);font-size:11px;" id="s-vo-pct">—%</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top clients + Top fournisseurs -->
+    <div class="g2">
+      <div class="panel">
+        <div class="panel-title">Top clients <em>2026 YTD — volume & CA</em></div>
+        <div id="bar-clients"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Top fournisseurs <em>2026 YTD — volume & CA</em></div>
+        <div id="bar-suppliers"></div>
+      </div>
+    </div>
+
+    <!-- Marques / modèles -->
+    <div class="panel" style="margin-bottom:14px;">
+      <div class="panel-title">Marques & modèles <em>2026 YTD</em></div>
+      <div style="overflow-x:auto;">
+        <table class="btable">
+          <thead>
+            <tr>
+              <th>Marque / Modèle</th>
+              <th>Volume</th>
+              <th>CA</th>
+              <th>Moy./vh</th>
+              <th>Part CA</th>
+            </tr>
+          </thead>
+          <tbody id="brand-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── CONFIG ── */
+let CFG = {};
+const LS = 'mxb_cfg_v2';
+
+function loadConfig() {
+  try { CFG = JSON.parse(localStorage.getItem(LS)||'{}'); } catch(e) { CFG={}; }
+  if (CFG.sheetId) {
+    document.getElementById('inp-sheet').value = CFG.sheetId;
+    document.getElementById('inp-apikey').value = CFG.apiKey;
+  }
+}
+
+function saveConfig() {
+  const s = document.getElementById('inp-sheet').value.trim();
+  const k = document.getElementById('inp-apikey').value.trim();
+  const err = document.getElementById('cfg-error');
+  if (!s||!k) { err.textContent='⚠ Sheet ID et clé API requis.'; err.style.display='block'; return; }
+  err.style.display='none';
+  CFG = { sheetId:s, apiKey:k };
+  localStorage.setItem(LS, JSON.stringify(CFG));
+  document.getElementById('cfg-overlay').style.display='none';
+  document.getElementById('app').style.display='block';
+  loadData();
+}
+
+/* ── FETCH ── */
+let chartCA = null;
+
+async function loadData() {
+  const ld = document.getElementById('loading');
+  ld.style.display='flex';
+  document.getElementById('load-msg').textContent = 'Lecture de "List of cars sold"...';
+  try {
+    // Lire tout l'onglet "List of cars sold" (jusqu'à 3000 lignes)
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${encodeURIComponent("List of cars sold!A1:H3000")}?key=${CFG.apiKey}`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      const txt = await res.text();
+      throw new Error(`API Sheets erreur ${res.status}: ${txt.slice(0,120)}`);
+    }
+    const data = await res.json();
+    ld.style.display='none';
+    render(parse(data.values||[]));
+    document.getElementById('upd-time').textContent = new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  } catch(e) {
+    ld.style.display='none';
+    alert('Erreur lecture Sheet :\n' + e.message + '\n\nVérifie que :\n1. Le Sheet est partagé en lecture publique\n2. La clé API est correcte et l\'API Sheets est activée\n3. Le nom de l\'onglet est exactement "List of cars sold"');
+    document.getElementById('cfg-overlay').style.display='flex';
+  }
+}
+
+/* ── PARSE ──
+   Col A: DELIVERY MONTH (MM/YYYY)
+   Col B: TYPE (VN/VO)
+   Col C: BRAND
+   Col D: MODEL
+   Col E: VIN or PLATE
+   Col F: SUPPLIER
+   Col G: CUSTOMER
+   Col H: CA (€)
+*/
+function parse(rows) {
+  if (rows.length < 2) return null;
+  // Ignore header (row 0)
+  const data = rows.slice(1).map(r => ({
+    month: (r[0]||'').trim(),   // "04/2024"
+    type:  (r[1]||'').trim().toUpperCase(),
+    brand: (r[2]||'').trim().toUpperCase(),
+    model: (r[3]||'').trim().toUpperCase(),
+    vin:   (r[4]||'').trim(),
+    supplier: (r[5]||'').trim(),
+    customer: (r[6]||'').trim(),
+    ca: parseMoney(r[7]||'0'),
+  })).filter(r => r.month && r.ca > 0);
+
+  const rows26 = data.filter(r => r.month.endsWith('2026'));
+  const rows25 = data.filter(r => r.month.endsWith('2025'));
+
+  // Mois complets 2026 (tous sauf mois en cours)
+  const now = new Date();
+  const curMonthKey = String(now.getMonth()+1).padStart(2,'0') + '/2026';
+  const completeMonths26 = rows26.filter(r => r.month !== curMonthKey);
+
+  // CA YTD 2026
+  const caYTD = rows26.reduce((s,r)=>s+r.ca,0);
+  const volYTD = rows26.length;
+
+  // Projection : CA mois complets / nb mois complets * 12
+  const monthsSet = [...new Set(completeMonths26.map(r=>r.month))];
+  const nbComplete = monthsSet.length;
+  const caComplete = completeMonths26.reduce((s,r)=>s+r.ca,0);
+  const proj = nbComplete > 0 ? Math.round(caComplete/nbComplete*12) : 0;
+
+  // Mois en cours 2026
+  const curRows = rows26.filter(r=>r.month===curMonthKey);
+  const caCur = curRows.reduce((s,r)=>s+r.ca,0);
+  const volCur = curRows.length;
+
+  // Meilleur mois 2026
+  const byMonth26 = groupBy(rows26,'month');
+  let bestMonth='', bestCA=0;
+  Object.entries(byMonth26).forEach(([m,arr])=>{
+    const ca = arr.reduce((s,r)=>s+r.ca,0);
+    if(ca>bestCA){bestCA=ca;bestMonth=m;}
+  });
+
+  // VN/VO 2026
+  const vn26 = rows26.filter(r=>r.type==='VN');
+  const vo26 = rows26.filter(r=>r.type==='VO');
+  const vnCA = vn26.reduce((s,r)=>s+r.ca,0);
+  const voCA = vo26.reduce((s,r)=>s+r.ca,0);
+
+  // Mensuel 2025 & 2026 pour graphe
+  const byM25 = groupBy(rows25,'month');
+  const byM26 = groupBy(rows26,'month');
+  const MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  const series25 = MONTHS.map(m => {
+    const arr = byM25[m+'/2025']||[];
+    return arr.length ? arr.reduce((s,r)=>s+r.ca,0) : null;
+  });
+  const series26 = MONTHS.map(m => {
+    const arr = byM26[m+'/2026']||[];
+    return arr.length ? arr.reduce((s,r)=>s+r.ca,0) : null;
+  });
+
+  // Top clients 2026
+  const byCli = groupBy(rows26,'customer');
+  const topClients = Object.entries(byCli).map(([name,arr])=>({
+    name, vol:arr.length, ca:arr.reduce((s,r)=>s+r.ca,0)
+  })).sort((a,b)=>b.ca-a.ca).slice(0,8);
+
+  // Top fournisseurs 2026
+  const byFurn = groupBy(rows26,'supplier');
+  const topSuppliers = Object.entries(byFurn).map(([name,arr])=>({
+    name, vol:arr.length, ca:arr.reduce((s,r)=>s+r.ca,0)
+  })).sort((a,b)=>b.ca-a.ca).slice(0,8);
+
+  // Marques / modèles 2026
+  const byBrand = {};
+  rows26.forEach(r => {
+    const k = r.brand+'|'+(r.model||'—');
+    if (!byBrand[k]) byBrand[k]={vol:0,ca:0};
+    byBrand[k].vol++; byBrand[k].ca+=r.ca;
+  });
+  const topBrands = Object.entries(byBrand).map(([k,v])=>({
+    brand:k.split('|')[0], model:k.split('|')[1], ...v
+  })).sort((a,b)=>b.ca-a.ca).slice(0,12);
+
+  return { caYTD, volYTD, proj, nbComplete, caCur, volCur, curMonthKey,
+    bestMonth, bestCA, vn:vn26.length, vo:vo26.length, vnCA, voCA,
+    series25, series26, topClients, topSuppliers, topBrands };
+}
+
+/* ── RENDER ── */
+function render(d) {
+  if (!d) return;
+
+  // KPIs
+  set('k-ytd', fmt(d.caYTD));
+  set('k-ytd-vol', d.volYTD + ' véhicules');
+  set('k-proj', fmt(d.proj));
+  set('k-proj-sub', `base ${d.nbComplete} mois complets`);
+  const marge = d.volYTD > 0 ? Math.round(d.caYTD/d.volYTD) : 0;
+  set('k-marge', fmt(marge));
+  set('k-best', fmt(d.bestCA));
+  set('k-best-sub', d.bestMonth || '—');
+  set('k-cur', fmt(d.caCur));
+  set('k-cur-sub', (d.volCur||0)+' vh · '+d.curMonthKey);
+
+  // Split VN/VO
+  const tot = d.vn+d.vo||1;
+  const vnP = Math.round(d.vn/tot*100);
+  const voP = 100-vnP;
+  set('s-vn', d.vn); set('s-vo', d.vo);
+  set('s-vn-ca', fmt(d.vnCA)); set('s-vo-ca', fmt(d.voCA));
+  set('s-vn-pct', vnP+'%'); set('s-vo-pct', voP+'%');
+  el('split-vn').style.width = vnP+'%'; el('split-vn').textContent = vnP+'% VN';
+  el('split-vo').style.width = voP+'%'; el('split-vo').textContent = voP+'% VO';
+
+  // Chart CA mensuel
+  const lbls = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+  if (chartCA) chartCA.destroy();
+  chartCA = new Chart(el('cCA'), {
+    type:'line',
+    data:{
+      labels:lbls,
+      datasets:[
+        { label:'2025', data:d.series25, borderColor:'rgba(59,141,245,0.4)', backgroundColor:'rgba(59,141,245,0.05)',
+          borderWidth:1.5, pointRadius:2, tension:.35, fill:true, spanGaps:false, borderDash:[4,3] },
+        { label:'2026', data:d.series26, borderColor:'#3b8df5', backgroundColor:'rgba(59,141,245,0.10)',
+          borderWidth:2.5, pointRadius:4, pointBackgroundColor:'#3b8df5', tension:.35, fill:true, spanGaps:false }
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{ display:true, labels:{ color:'#8a8fa8', font:{size:11,family:'DM Mono'}, boxWidth:12, padding:16 } },
+        tooltip:{ mode:'index', intersect:false, callbacks:{ label:ctx=>' '+ctx.dataset.label+' : '+fmtN(ctx.raw)+' €' } }
+      },
+      scales:{
+        x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#454a5e',font:{size:10}} },
+        y:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#454a5e',font:{size:10}, callback:v=>(v>=1000?(v/1000).toFixed(0)+'k':v)+'€'} }
+      }
+    }
+  });
+
+  // Bars clients
+  renderBars('bar-clients', d.topClients, '#3b8df5');
+  renderBars('bar-suppliers', d.topSuppliers, '#4caf7d');
+
+  // Brand table
+  const tbody = el('brand-tbody'); tbody.innerHTML='';
+  d.topBrands.forEach(b=>{
+    const moy = b.vol>0?Math.round(b.ca/b.vol):0;
+    const pct = d.caYTD>0?(b.ca/d.caYTD*100).toFixed(1):0;
+    tbody.innerHTML+=`<tr>
+      <td><span class="bname">${b.brand}</span> <span class="bmodel">${b.model}</span></td>
+      <td>${b.vol}</td><td>${fmt(b.ca)}</td>
+      <td style="color:var(--text3)">${fmt(moy)}</td>
+      <td><span class="pill pill-blue">${pct}%</span></td>
+    </tr>`;
+  });
+}
+
+function renderBars(id, items, color) {
+  const wrap = el(id); wrap.innerHTML='';
+  const max = items[0]?.ca||1;
+  items.forEach(({name,vol,ca})=>{
+    const p = Math.round(ca/max*100);
+    wrap.innerHTML+=`<div class="bar-row">
+      <div class="bar-name" title="${name}">${name}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${color};opacity:.75;"></div></div>
+      <div class="bar-vol">${vol}vh</div>
+      <div class="bar-val">${fmt(ca)}</div>
+    </div>`;
+  });
+}
+
+/* ── UTILS ── */
+function groupBy(arr, key) {
+  return arr.reduce((acc,r)=>{ const k=r[key]; if(!acc[k])acc[k]=[]; acc[k].push(r); return acc; },{});
+}
+function parseMoney(s) {
+  if(!s) return 0;
+  return parseFloat(String(s).replace(/[€\s]/g,'').replace(/\./g,'').replace(',','.')) || 0;
+}
+function fmt(n) {
+  if(!n&&n!==0) return '—';
+  return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+}
+function fmtN(n) { return n!=null ? new Intl.NumberFormat('fr-FR',{maximumFractionDigits:0}).format(n) : '—'; }
+function el(id) { return document.getElementById(id); }
+function set(id,v) { const e=el(id); if(e) e.textContent=v; }
+
+/* ── AUTO-REFRESH 5 min ── */
+setInterval(()=>{ if(el('app').style.display!=='none') loadData(); }, 5*60*1000);
+
+/* ── INIT ── */
+loadConfig();
+if (CFG.sheetId && CFG.apiKey) {
+  el('cfg-overlay').style.display='none';
+  el('app').style.display='block';
+  loadData();
+}
+</script>
+</body>
+</html>
