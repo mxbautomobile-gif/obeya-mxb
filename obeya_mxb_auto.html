@@ -52,7 +52,6 @@
   #cfg-btn:hover { opacity: .85; }
   #cfg-error { font-size: 12px; color: var(--red); margin-top: 10px; display: none; }
 
-  /* ── APP ── */
   #app { display: none; }
 
   header {
@@ -61,66 +60,39 @@
     height: 54px; background: var(--bg); position: sticky; top: 0; z-index: 10;
   }
   .hdr-left { display: flex; align-items: center; gap: 12px; }
-  .hdr-logo { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+  .hdr-logo { font-size: 15px; font-weight: 800; }
   .hdr-logo span { color: var(--accent); }
   .hdr-right { display: flex; align-items: center; gap: 12px; }
   .hdr-time { font-family: var(--mono); font-size: 11px; color: var(--text3); }
-  .btn-refresh {
-    background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px;
-    padding: 6px 12px; color: var(--text2); font-size: 12px; cursor: pointer; transition: all .2s;
-  }
+  .btn-refresh { background: var(--bg3); border: 1px solid var(--border2); border-radius: 6px; padding: 6px 12px; color: var(--text2); font-size: 12px; cursor: pointer; transition: all .2s; }
   .btn-refresh:hover { color: var(--text); }
   .btn-cfg { background: none; border: none; color: var(--text3); font-size: 17px; cursor: pointer; padding: 4px; }
   .btn-cfg:hover { color: var(--text2); }
 
   /* ── MAIN TABS ── */
-  .main-tabs {
-    display: flex; gap: 0; padding: 0 28px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg);
-  }
-  .mtab {
-    padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer;
-    color: var(--text3); border-bottom: 2px solid transparent;
-    transition: all .2s; user-select: none; display: flex; align-items: center; gap: 7px;
-  }
+  .main-tabs { display: flex; padding: 0 28px; border-bottom: 1px solid var(--border); background: var(--bg); }
+  .mtab { padding: 12px 20px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text3); border-bottom: 2px solid transparent; transition: all .2s; user-select: none; display: flex; align-items: center; gap: 7px; }
   .mtab:hover { color: var(--text2); }
   .mtab.active { color: var(--text); border-bottom-color: var(--accent); }
-  .mtab-badge {
-    font-family: var(--mono); font-size: 10px; padding: 2px 6px; border-radius: 4px;
-    background: var(--accent-dim); color: var(--accent);
-  }
+  .mtab-badge { font-family: var(--mono); font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--accent-dim); color: var(--accent); }
 
   /* ── YEAR TABS ── */
-  .year-tabs {
-    display: flex; gap: 0; padding: 0 28px 0 8px;
-    background: var(--bg2); border-bottom: 1px solid var(--border);
-  }
-  .ytab {
-    padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer;
-    color: var(--text3); border-bottom: 2px solid transparent;
-    transition: all .2s; user-select: none;
-  }
+  .year-tabs { display: flex; padding: 0 28px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+  .ytab { padding: 8px 16px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text3); border-bottom: 2px solid transparent; transition: all .2s; user-select: none; }
   .ytab:hover { color: var(--text2); }
   .ytab.active { color: var(--text); border-bottom-color: var(--blue); }
 
   /* ── LOADING ── */
-  #loading {
-    position: fixed; inset: 0; background: rgba(13,15,18,0.92);
-    display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 50;
-  }
+  #loading { position: fixed; inset: 0; background: rgba(13,15,18,0.92); display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 50; }
   .spinner { width: 26px; height: 26px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: spin .7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   #loading p { font-size: 12px; color: var(--text2); font-family: var(--mono); }
 
   main { padding: 22px 28px 48px; max-width: 1400px; margin: 0 auto; }
 
-  /* ── KPI ROW ── */
-  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; margin-bottom: 18px; }
-  .kpi {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 16px 18px; position: relative; overflow: hidden;
-  }
+  /* ── KPI ── */
+  .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 10px; margin-bottom: 18px; }
+  .kpi { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; position: relative; overflow: hidden; }
   .kpi::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 12px 12px 0 0; }
   .kpi.blue::after { background: var(--blue); }
   .kpi.green::after { background: var(--green); }
@@ -128,8 +100,27 @@
   .kpi.accent::after { background: var(--accent); }
   .kpi.red::after { background: var(--red); }
   .kpi-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--text3); margin-bottom: 8px; }
-  .kpi-val { font-size: 24px; font-weight: 700; font-family: var(--mono); line-height: 1; color: var(--text); }
+  .kpi-val { font-size: 22px; font-weight: 700; font-family: var(--mono); line-height: 1; color: var(--text); }
   .kpi-sub { font-size: 11px; color: var(--text2); margin-top: 5px; font-family: var(--mono); }
+  .kpi-tag { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; margin-top: 6px; display: inline-block; padding: 2px 6px; border-radius: 3px; }
+  .tag-green { background: var(--green-dim); color: var(--green); }
+  .tag-amber { background: var(--amber-dim); color: var(--amber); }
+  .tag-blue { background: var(--blue-dim); color: var(--blue); }
+
+  /* ── TRESO BAND ── */
+  .treso-band {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 22px; margin-bottom: 18px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+  }
+  .treso-item { padding: 0 20px; }
+  .treso-item:first-child { padding-left: 0; border-right: 1px solid var(--border); }
+  .treso-item:nth-child(2) { border-right: 1px solid var(--border); }
+  .treso-item:last-child { padding-right: 0; }
+  .treso-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--text3); margin-bottom: 6px; }
+  .treso-val { font-size: 28px; font-weight: 700; font-family: var(--mono); line-height: 1; }
+  .treso-sub { font-size: 11px; color: var(--text2); margin-top: 5px; font-family: var(--mono); }
+  .treso-cert { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; margin-top: 8px; display: inline-block; padding: 3px 8px; border-radius: 4px; }
 
   /* ── GRID ── */
   .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
@@ -138,47 +129,53 @@
 
   /* ── PANEL ── */
   .panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
-  .panel-title {
-    font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--text3);
-    margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;
-  }
+  .panel-title { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: var(--text3); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
   .panel-title em { font-style: normal; font-family: var(--mono); color: var(--text2); font-size: 11px; text-transform: none; letter-spacing: 0; }
 
   /* ── PIPELINE ── */
-  .pipeline-wrap { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
-  .pipeline-col {
-    flex: 0 0 180px; background: var(--bg3); border-radius: 10px; padding: 14px 14px 10px;
-    border: 1px solid var(--border);
-  }
-  .pipeline-col-title {
-    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
-    margin-bottom: 10px; line-height: 1.3;
-  }
-  .pipeline-col-title.discussion { color: var(--text3); }
-  .pipeline-col-title.confirmed { color: var(--amber); }
-  .pipeline-col-title.bac-rouge { color: var(--red); }
-  .pipeline-col-title.livres-non-enc { color: var(--blue); }
-  .pipeline-col-title.problem { color: var(--red); }
-  .pipeline-col-title.close { color: var(--green); }
-  .pipeline-kpi { font-size: 28px; font-weight: 700; font-family: var(--mono); color: var(--text); margin-bottom: 2px; }
-  .pipeline-sub { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-bottom: 10px; }
+  .pipeline-wrap { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; }
+  .pipeline-col { flex: 0 0 190px; background: var(--bg3); border-radius: 10px; padding: 14px 12px 10px; border: 1px solid var(--border); }
+  .pipeline-col-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; line-height: 1.3; }
+  .pipeline-col-kpi { font-size: 26px; font-weight: 700; font-family: var(--mono); color: var(--text); margin: 8px 0 2px; }
+  .pipeline-col-ca { font-size: 13px; font-family: var(--mono); margin-bottom: 4px; }
+  .pipeline-col-sub { font-size: 10px; color: var(--text3); font-family: var(--mono); margin-bottom: 10px; }
+  .pipeline-divider { height: 1px; background: var(--border); margin-bottom: 8px; }
   .pipeline-cards { display: flex; flex-direction: column; gap: 6px; }
-  .pipeline-card {
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 6px;
-    padding: 7px 10px; font-size: 11px; color: var(--text2); line-height: 1.4;
-  }
-  .pipeline-card .card-vol { font-family: var(--mono); font-weight: 700; color: var(--text); font-size: 12px; }
-  .pipeline-card .card-name { color: var(--text3); font-size: 10px; margin-top: 2px; }
 
-  /* ── PIPELINE FUNNEL ── */
+  /* ── PIPELINE CARD ── */
+  .pcard {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 10px; cursor: default; position: relative;
+    transition: border-color .15s;
+  }
+  .pcard:hover { border-color: var(--border2); }
+  .pcard-main { display: flex; align-items: baseline; gap: 8px; }
+  .pcard-vol { font-family: var(--mono); font-weight: 700; color: var(--text); font-size: 14px; }
+  .pcard-ca { font-family: var(--mono); font-size: 11px; color: var(--text2); }
+  .pcard-sep { font-size: 10px; color: var(--text3); }
+  .pcard-no-ca { font-size: 10px; color: var(--red); font-family: var(--mono); }
+
+  /* ── TOOLTIP ── */
+  .tooltip {
+    position: fixed; z-index: 200;
+    background: var(--bg2); border: 1px solid var(--border2);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 12px; color: var(--text2); line-height: 1.5;
+    max-width: 280px; pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    display: none;
+  }
+  .tooltip-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+
+  /* ── FUNNEL ── */
   .funnel-wrap { display: flex; flex-direction: column; gap: 6px; }
   .funnel-row { display: flex; align-items: center; gap: 10px; }
-  .funnel-label { font-size: 11px; color: var(--text2); width: 160px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .funnel-bar-bg { flex: 1; height: 22px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
-  .funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-family: var(--mono); font-weight: 600; color: rgba(255,255,255,.9); transition: width .6s ease; }
-  .funnel-val { font-family: var(--mono); font-size: 12px; color: var(--text2); width: 50px; text-align: right; flex-shrink: 0; }
+  .funnel-label { font-size: 11px; color: var(--text2); width: 180px; flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .funnel-bar-bg { flex: 1; height: 20px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+  .funnel-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 10px; font-family: var(--mono); font-weight: 600; color: rgba(255,255,255,.85); transition: width .6s ease; white-space: nowrap; }
+  .funnel-val { font-family: var(--mono); font-size: 11px; color: var(--text2); width: 80px; text-align: right; flex-shrink: 0; }
 
-  /* ── BAR ROWS ── */
+  /* ── BARS ── */
   .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
   .bar-row:last-child { margin-bottom: 0; }
   .bar-name { font-size: 12px; color: var(--text2); width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex-shrink: 0; }
@@ -187,7 +184,7 @@
   .bar-vol { font-family: var(--mono); font-size: 10px; color: var(--text3); width: 32px; text-align: right; flex-shrink: 0; }
   .bar-val { font-family: var(--mono); font-size: 11px; color: var(--text2); width: 64px; text-align: right; flex-shrink: 0; }
 
-  /* ── SPLIT VN/VO ── */
+  /* ── SPLIT ── */
   .split-bar { display: flex; height: 28px; border-radius: 6px; overflow: hidden; margin-bottom: 10px; }
   .split-vn { background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; min-width: 0; }
   .split-vo { background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: rgba(255,255,255,.9); transition: width .5s; min-width: 0; }
@@ -205,38 +202,30 @@
   .bmodel { font-size: 10px; color: var(--text3); }
   .pill { display: inline-block; font-size: 10px; font-family: var(--mono); padding: 2px 6px; border-radius: 4px; }
   .pill-blue { background: var(--blue-dim); color: var(--blue); }
-  .pill-red { background: var(--red-dim); color: var(--red); }
-  .pill-amber { background: var(--amber-dim); color: var(--amber); }
-  .pill-green { background: var(--green-dim); color: var(--green); }
 
-  .impaye-banner {
-    background: var(--red-dim); border: 1px solid rgba(224,85,85,0.2);
-    border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
-    font-size: 12px; color: var(--red); display: none; align-items: center; gap: 8px;
-  }
+  .impaye-banner { background: var(--red-dim); border: 1px solid rgba(224,85,85,0.2); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 12px; color: var(--red); display: none; align-items: center; gap: 8px; }
 
-  /* ── VIEWS ── */
   .view { display: none; }
   .view.active { display: block; }
 
-  @media(max-width:860px) { .g2,.g3,.gw { grid-template-columns: 1fr; } main { padding: 14px; } }
+  @media(max-width:860px) { .g2,.g3,.gw,.treso-band { grid-template-columns: 1fr; } main { padding: 14px; } }
 </style>
 </head>
 <body>
+
+<div id="tooltip" class="tooltip"></div>
 
 <!-- CONFIG -->
 <div id="cfg-overlay">
   <div id="cfg-box">
     <h2>⚙️ Configuration obeya</h2>
-    <p>Connecte ton Google Sheet et Trello pour alimenter l'obeya en temps réel.</p>
-
+    <p>Connecte ton Google Sheet et Trello. Ces paramètres sont sauvegardés définitivement.</p>
     <div class="cfg-section">📊 Google Sheets</div>
     <label>ID du Google Sheet</label>
     <input id="inp-sheet" type="text" placeholder="1IPxW0P-2zb6Czn-Y9LIkZ6bKL91Tx3amf7b9mG3x698">
     <p class="cfg-hint">Dans l'URL : docs.google.com/spreadsheets/d/<strong style="color:var(--blue)">ID_ICI</strong>/edit</p>
     <label>Clé API Google Sheets</label>
     <input id="inp-apikey" type="text" placeholder="AIza...">
-
     <div class="cfg-section">🗂 Trello</div>
     <label>Clé API Trello</label>
     <input id="inp-trello-key" type="text" placeholder="0d0cf2f251f057baab3965d80f09fabf">
@@ -244,7 +233,6 @@
     <input id="inp-trello-token" type="text" placeholder="ATTA...">
     <label>Nom du board</label>
     <input id="inp-trello-board" type="text" placeholder="Running business">
-
     <button id="cfg-btn" onclick="saveConfig()">Lancer l'obeya →</button>
     <div id="cfg-error"></div>
   </div>
@@ -265,92 +253,71 @@
     <div class="hdr-right">
       <div class="hdr-time">Màj : <span id="upd-time">—</span></div>
       <button class="btn-refresh" onclick="loadAll()">↺ Actualiser</button>
-      <button class="btn-cfg" onclick="document.getElementById('cfg-overlay').style.display='flex'" title="Config">⚙</button>
+      <button class="btn-cfg" onclick="document.getElementById('cfg-overlay').style.display='flex'">⚙</button>
     </div>
   </header>
 
-  <!-- MAIN TABS -->
   <div class="main-tabs">
-    <div class="mtab active" onclick="switchView('pipeline')" id="mtab-pipeline">
-      🚗 Pipeline Trello <span class="mtab-badge" id="pipe-badge">—</span>
-    </div>
+    <div class="mtab active" onclick="switchView('pipeline')" id="mtab-pipeline">🚗 Pipeline Trello <span class="mtab-badge" id="pipe-badge">—</span></div>
     <div class="mtab" onclick="switchView('ventes')" id="mtab-ventes">📊 Ventes Sheet</div>
   </div>
 
-  <!-- ═══════════════════════════════════
-       VIEW : PIPELINE TRELLO
-  ═══════════════════════════════════ -->
+  <!-- PIPELINE VIEW -->
   <div class="view active" id="view-pipeline">
     <main>
-      <!-- KPIs pipeline -->
-      <div class="kpi-row">
-        <div class="kpi accent">
-          <div class="kpi-lbl">Total en pipeline</div>
-          <div class="kpi-val" id="p-total">—</div>
-          <div class="kpi-sub">véhicules en cours</div>
+
+      <!-- 3 KPIs tréso -->
+      <div class="treso-band">
+        <div class="treso-item">
+          <div class="treso-lbl">CA Acquis</div>
+          <div class="treso-val" style="color:var(--green)" id="t-acquis">—</div>
+          <div class="treso-sub" id="t-acquis-sub">— véhicules livrés & encaissés</div>
+          <span class="treso-cert tag-green">✓ Encaissé</span>
         </div>
-        <div class="kpi amber">
-          <div class="kpi-lbl">Confirmés non livrés</div>
-          <div class="kpi-val" id="p-confirmed">—</div>
-          <div class="kpi-sub">véhicules</div>
+        <div class="treso-item">
+          <div class="treso-lbl">CA Livré non encaissé</div>
+          <div class="treso-val" style="color:var(--amber)" id="t-pending">—</div>
+          <div class="treso-sub" id="t-pending-sub">— véhicules</div>
+          <span class="treso-cert tag-amber">⏳ À encaisser</span>
         </div>
-        <div class="kpi red">
-          <div class="kpi-lbl">Bac rouge</div>
-          <div class="kpi-val" id="p-bacrouge">—</div>
-          <div class="kpi-sub">véhicules bloqués</div>
-        </div>
-        <div class="kpi blue">
-          <div class="kpi-lbl">Livrés non encaissés</div>
-          <div class="kpi-val" id="p-livres-enc">—</div>
-          <div class="kpi-sub">véhicules</div>
-        </div>
-        <div class="kpi red">
-          <div class="kpi-lbl">Problèmes factures</div>
-          <div class="kpi-val" id="p-problem">—</div>
-          <div class="kpi-sub">véhicules</div>
-        </div>
-        <div class="kpi green">
-          <div class="kpi-lbl">Closés</div>
-          <div class="kpi-val" id="p-close">—</div>
-          <div class="kpi-sub">véhicules</div>
+        <div class="treso-item">
+          <div class="treso-lbl">CA dans le tuyau</div>
+          <div class="treso-val" style="color:var(--blue)" id="t-pipe">—</div>
+          <div class="treso-sub" id="t-pipe-sub">— véhicules confirmés</div>
+          <span class="treso-cert tag-blue">→ Engagé</span>
         </div>
       </div>
 
-      <!-- Funnel visuel -->
+      <!-- Funnel -->
       <div class="panel" style="margin-bottom:14px;">
-        <div class="panel-title">Funnel pipeline — véhicules par étape</div>
+        <div class="panel-title">Funnel pipeline — véhicules par étape <em id="pipe-no-ca"></em></div>
         <div class="funnel-wrap" id="funnel-wrap"></div>
       </div>
 
-      <!-- Cartes par colonne -->
+      <!-- Colonnes pipeline -->
       <div class="panel">
-        <div class="panel-title">Détail des deals en cours</div>
+        <div class="panel-title">Détail des deals</div>
         <div class="pipeline-wrap" id="pipeline-cols"></div>
       </div>
+
     </main>
   </div>
 
-  <!-- ═══════════════════════════════════
-       VIEW : VENTES SHEET
-  ═══════════════════════════════════ -->
+  <!-- VENTES VIEW -->
   <div class="view" id="view-ventes">
-    <!-- YEAR TABS -->
     <div class="year-tabs">
       <div class="ytab" onclick="switchYear(2024)" id="tab-2024">2024</div>
       <div class="ytab" onclick="switchYear(2025)" id="tab-2025">2025</div>
       <div class="ytab active" onclick="switchYear(2026)" id="tab-2026">2026</div>
     </div>
-
     <main>
-      <div class="impaye-banner" id="impaye-banner">
-        ⚠ <span id="impaye-txt"></span>
-      </div>
+      <div class="impaye-banner" id="impaye-banner">⚠ <span id="impaye-txt"></span></div>
 
       <div class="kpi-row">
         <div class="kpi blue">
           <div class="kpi-lbl">CA <span id="k-year-lbl">YTD</span></div>
           <div class="kpi-val" id="k-ca">—</div>
-          <div class="kpi-sub" id="k-vol">— véhicules</div>
+          <div class="kpi-sub" id="k-vol">—</div>
         </div>
         <div class="kpi amber">
           <div class="kpi-lbl" id="k-proj-lbl">Projection</div>
@@ -358,7 +325,7 @@
           <div class="kpi-sub" id="k-proj-sub">—</div>
         </div>
         <div class="kpi red">
-          <div class="kpi-lbl">En attente encaiss.</div>
+          <div class="kpi-lbl">Livré non encaissé</div>
           <div class="kpi-val" id="k-enc">—</div>
           <div class="kpi-sub" id="k-enc-vol">—</div>
         </div>
@@ -376,11 +343,11 @@
 
       <div class="gw">
         <div class="panel">
-          <div class="panel-title">Évolution CA mensuel <em id="chart-sub">vs année précédente</em></div>
+          <div class="panel-title">Évolution CA mensuel <em id="chart-sub">—</em></div>
           <div style="position:relative;height:210px;"><canvas id="cCA"></canvas></div>
         </div>
         <div class="panel">
-          <div class="panel-title">Split VN / VO <em id="split-year-lbl">YTD</em></div>
+          <div class="panel-title">Split VN / VO <em id="split-lbl">—</em></div>
           <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
             <div>
               <div style="font-size:32px;font-weight:700;font-family:var(--mono);color:var(--blue)" id="s-vn">—</div>
@@ -398,8 +365,8 @@
             <div class="split-vo" id="split-vo" style="width:20%">VO</div>
           </div>
           <div class="split-legend">
-            <div><span class="sdot" style="background:var(--blue)"></span>VN <span style="color:var(--text2);font-family:var(--mono);font-size:11px;" id="s-vn-pct">—%</span></div>
-            <div><span class="sdot" style="background:var(--accent)"></span>VO <span style="color:var(--text2);font-family:var(--mono);font-size:11px;" id="s-vo-pct">—%</span></div>
+            <div><span class="sdot" style="background:var(--blue)"></span>VN <span style="color:var(--text2);font-family:var(--mono);font-size:11px;" id="s-vn-pct">—</span></div>
+            <div><span class="sdot" style="background:var(--accent)"></span>VO <span style="color:var(--text2);font-family:var(--mono);font-size:11px;" id="s-vo-pct">—</span></div>
           </div>
         </div>
       </div>
@@ -425,17 +392,17 @@
 
       <div class="g2">
         <div class="panel">
-          <div class="panel-title">Top clients <em id="top-cli-lbl">YTD</em></div>
+          <div class="panel-title">Top clients <em id="top-cli-lbl">—</em></div>
           <div id="bar-clients"></div>
         </div>
         <div class="panel">
-          <div class="panel-title">Top fournisseurs <em id="top-sup-lbl">YTD</em></div>
+          <div class="panel-title">Top fournisseurs <em id="top-sup-lbl">—</em></div>
           <div id="bar-suppliers"></div>
         </div>
       </div>
 
       <div class="panel" style="margin-bottom:14px;">
-        <div class="panel-title">Marques & modèles <em id="brand-lbl">YTD</em></div>
+        <div class="panel-title">Marques & modèles <em id="brand-lbl">—</em></div>
         <div style="overflow-x:auto;">
           <table class="btable">
             <thead><tr><th>Marque / Modèle</th><th>Volume</th><th>CA</th><th>Moy./vh</th><th>Part CA</th></tr></thead>
@@ -448,13 +415,13 @@
 </div>
 
 <script>
-/* ── CONFIG ── */
 let CFG = {};
-const LS = 'mxb_cfg_v4';
+const LS = 'mxb_cfg_v5';
 let ALL_SHEET = null;
 let CUR_YEAR = 2026;
 let chartCA = null;
 
+/* ── CONFIG ── */
 function loadConfig() {
   try { CFG = JSON.parse(localStorage.getItem(LS)||'{}'); } catch(e) { CFG={}; }
   if (CFG.sheetId) el('inp-sheet').value = CFG.sheetId;
@@ -463,18 +430,13 @@ function loadConfig() {
   if (CFG.trelloToken) el('inp-trello-token').value = CFG.trelloToken;
   if (CFG.trelloBoard) el('inp-trello-board').value = CFG.trelloBoard;
 }
-
 function saveConfig() {
-  const s = el('inp-sheet').value.trim();
-  const k = el('inp-apikey').value.trim();
-  const tk = el('inp-trello-key').value.trim();
-  const tt = el('inp-trello-token').value.trim();
-  const tb = el('inp-trello-board').value.trim();
-  const err = el('cfg-error');
-  if (!s||!k) { err.textContent='⚠ Sheet ID et clé API Google requis.'; err.style.display='block'; return; }
-  err.style.display='none';
-  CFG = { sheetId:s, apiKey:k, trelloKey:tk, trelloToken:tt, trelloBoard:tb||'Running business' };
-  localStorage.setItem(LS, JSON.stringify(CFG));
+  const s=el('inp-sheet').value.trim(), k=el('inp-apikey').value.trim();
+  const tk=el('inp-trello-key').value.trim(), tt=el('inp-trello-token').value.trim(), tb=el('inp-trello-board').value.trim();
+  if(!s||!k){el('cfg-error').textContent='⚠ Sheet ID et clé API Google requis.';el('cfg-error').style.display='block';return;}
+  el('cfg-error').style.display='none';
+  CFG={sheetId:s,apiKey:k,trelloKey:tk,trelloToken:tt,trelloBoard:tb||'Running business'};
+  localStorage.setItem(LS,JSON.stringify(CFG));
   el('cfg-overlay').style.display='none';
   el('app').style.display='block';
   loadAll();
@@ -482,263 +444,274 @@ function saveConfig() {
 
 /* ── VIEWS ── */
 function switchView(v) {
-  ['pipeline','ventes'].forEach(id => {
-    el('view-'+id).classList.toggle('active', id===v);
-    el('mtab-'+id).classList.toggle('active', id===v);
+  ['pipeline','ventes'].forEach(id=>{
+    el('view-'+id).classList.toggle('active',id===v);
+    el('mtab-'+id).classList.toggle('active',id===v);
   });
 }
-
 function switchYear(y) {
-  CUR_YEAR = y;
-  [2024,2025,2026].forEach(yr => el('tab-'+yr).classList.toggle('active', yr===y));
-  if (ALL_SHEET) renderYear(y);
+  CUR_YEAR=y;
+  [2024,2025,2026].forEach(yr=>el('tab-'+yr).classList.toggle('active',yr===y));
+  if(ALL_SHEET) renderYear(y);
 }
 
 /* ── LOAD ALL ── */
 async function loadAll() {
   el('loading').style.display='flex';
-  set('load-msg','Chargement des données...');
-  try {
-    const [sheetData, trelloData] = await Promise.allSettled([
-      loadSheet(),
-      loadTrello()
-    ]);
-    if (sheetData.status==='fulfilled') {
-      ALL_SHEET = sheetData.value;
-      renderYear(CUR_YEAR);
-    }
-    if (trelloData.status==='fulfilled') {
-      renderPipeline(trelloData.value);
-    } else if (CFG.trelloKey) {
-      console.warn('Trello:', trelloData.reason);
-    }
-    set('upd-time', new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}));
-  } catch(e) { console.error(e); }
+  const [sheetRes, trelloRes] = await Promise.allSettled([loadSheet(), loadTrello()]);
+  if(sheetRes.status==='fulfilled') { ALL_SHEET=sheetRes.value; renderYear(CUR_YEAR); }
+  else console.warn('Sheet error:', sheetRes.reason);
+  if(trelloRes.status==='fulfilled') renderPipeline(trelloRes.value, ALL_SHEET);
+  else if(CFG.trelloKey) console.warn('Trello error:', trelloRes.reason);
+  set('upd-time',new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}));
   el('loading').style.display='none';
 }
 
 /* ── SHEET ── */
 async function loadSheet() {
   set('load-msg','Lecture Google Sheet...');
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${encodeURIComponent("List of cars sold!A1:I3000")}?key=${CFG.apiKey}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Sheet ' + res.status);
-  const data = await res.json();
-  return parseSheet(data.values||[]);
+  const url=`https://sheets.googleapis.com/v4/spreadsheets/${CFG.sheetId}/values/${encodeURIComponent("List of cars sold!A1:I3000")}?key=${CFG.apiKey}`;
+  const res=await fetch(url);
+  if(!res.ok) throw new Error('Sheet '+res.status+': '+(await res.text()).slice(0,80));
+  return parseSheet((await res.json()).values||[]);
 }
-
 function parseSheet(rows) {
-  if (rows.length < 2) return {};
-  const records = rows.slice(1).map(r => ({
-    month: (r[0]||'').trim(),
-    type: (r[1]||'').trim().toUpperCase(),
-    brand: (r[2]||'').trim().toUpperCase(),
-    model: (r[3]||'').trim().toUpperCase(),
-    supplier: (r[5]||'').trim(),
-    customer: (r[6]||'').trim(),
-    ca: parseMoney(r[7]||'0'),
-    pending: (r[8]||'').trim().toLowerCase()==='pas encaissé',
-  })).filter(r => r.month && r.ca > 0);
-  const byYear = {};
-  [2024,2025,2026].forEach(y => { byYear[y] = records.filter(r=>r.month.endsWith(String(y))); });
-  return { records, byYear };
+  if(rows.length<2) return {records:[],byYear:{}};
+  const records=rows.slice(1).map(r=>({
+    month:(r[0]||'').trim(), type:(r[1]||'').trim().toUpperCase(),
+    brand:(r[2]||'').trim().toUpperCase(), model:(r[3]||'').trim().toUpperCase(),
+    supplier:(r[5]||'').trim(), customer:(r[6]||'').trim(),
+    ca:parseMoney(r[7]||'0'), pending:(r[8]||'').trim().toLowerCase()==='pas encaissé',
+  })).filter(r=>r.month&&r.ca>0);
+  const byYear={};
+  [2024,2025,2026].forEach(y=>{byYear[y]=records.filter(r=>r.month.endsWith(String(y)));});
+  return {records,byYear};
 }
 
 /* ── TRELLO ── */
 async function loadTrello() {
-  if (!CFG.trelloKey || !CFG.trelloToken) throw new Error('Pas de config Trello');
+  if(!CFG.trelloKey||!CFG.trelloToken) throw new Error('No Trello config');
   set('load-msg','Lecture Trello...');
-  // Récupère les boards
-  const boardsRes = await fetch(`https://api.trello.com/1/members/me/boards?key=${CFG.trelloKey}&token=${CFG.trelloToken}&fields=name,id`);
-  if (!boardsRes.ok) throw new Error('Trello boards ' + boardsRes.status);
-  const boards = await boardsRes.json();
-  const board = boards.find(b => b.name.toLowerCase().includes(CFG.trelloBoard.toLowerCase()));
-  if (!board) throw new Error('Board "'+CFG.trelloBoard+'" introuvable');
-
-  // Récupère lists + cards
-  const [listsRes, cardsRes] = await Promise.all([
+  const boardsRes=await fetch(`https://api.trello.com/1/members/me/boards?key=${CFG.trelloKey}&token=${CFG.trelloToken}&fields=name,id`);
+  if(!boardsRes.ok) throw new Error('Trello boards '+boardsRes.status);
+  const boards=await boardsRes.json();
+  const board=boards.find(b=>b.name.toLowerCase().includes(CFG.trelloBoard.toLowerCase()));
+  if(!board) throw new Error('Board "'+CFG.trelloBoard+'" introuvable');
+  const [listsRes,cardsRes]=await Promise.all([
     fetch(`https://api.trello.com/1/boards/${board.id}/lists?key=${CFG.trelloKey}&token=${CFG.trelloToken}`),
     fetch(`https://api.trello.com/1/boards/${board.id}/cards?key=${CFG.trelloKey}&token=${CFG.trelloToken}&fields=name,idList`)
   ]);
-  const lists = await listsRes.json();
-  const cards = await cardsRes.json();
-  return { lists, cards };
+  return {lists:await listsRes.json(), cards:await cardsRes.json()};
 }
 
-/* ── RENDER PIPELINE ── */
-const COL_CONFIG = [
-  { key: 'discussion', match: ['discussion'], label: 'Discussion', color: 'var(--text3)', barColor: '#454a5e' },
-  { key: 'confirmed',  match: ['confirm'],    label: 'Confirmés non livrés', color: 'var(--amber)', barColor: '#f0a500' },
-  { key: 'bacrouge',   match: ['bac rouge','bac_rouge','rouge'], label: 'Bac Rouge', color: 'var(--red)', barColor: '#e05555' },
-  { key: 'livres-enc', match: ['livrés_non','livres_non','non encaissé','non_encaissé'], label: 'Livrés non encaissés', color: 'var(--blue)', barColor: '#3b8df5' },
-  { key: 'problem',    match: ['problem'],    label: 'Problème facture', color: 'var(--red)', barColor: '#e05555' },
-  { key: 'close',      match: ['close'],      label: 'Closés', color: 'var(--green)', barColor: '#4caf7d' },
+/* ── PIPELINE CONFIG ── */
+const PIPE_COLS = [
+  // match: mots clés dans le nom de la liste Trello (lowercase)
+  // exclu de la vue obeya : discussion, closés
+  { key:'confirmed',  matches:['confirm'],                    label:'Confirmés non livrés',      color:'#f0a500', inProjection:true  },
+  { key:'bacrouge-vh',matches:['bac rouge','bac_rouge','rouge non livr'], label:'Bac Rouge véhicule',        color:'#e05555', inProjection:false },
+  { key:'livres-enc', matches:['livrés_non','livres_non','non encaiss'],  label:'Livrés non encaissés',      color:'#3b8df5', inProjection:false },
+  { key:'bacrouge-fa',matches:['bac rouge factur','factur_problem','pbm','problem'], label:'Bac Rouge Facturation MXB', color:'#e05555', inProjection:false },
 ];
+const HIDDEN_COLS = ['discussion','closé','close','closed'];
 
-function matchCol(name) {
-  const n = name.toLowerCase();
-  for (const c of COL_CONFIG) {
-    if (c.match.some(m => n.includes(m))) return c;
-  }
+function matchPipeCol(name) {
+  const n=name.toLowerCase();
+  if(HIDDEN_COLS.some(h=>n.includes(h))) return null; // caché
+  for(const c of PIPE_COLS) { if(c.matches.some(m=>n.includes(m))) return c; }
   return null;
 }
 
-function extractVol(title) {
-  // Cherche un nombre suivi de "x" ou "X" (ex: "72x", "8X", ": 8x")
-  const m = title.match(/(\d+)\s*[xX]/);
-  if (m) return parseInt(m[1]);
-  // Ou un nombre en début de titre
-  const m2 = title.match(/^(\d+)/);
-  if (m2) return parseInt(m2[1]);
-  return 1;
+/* ── PARSE CARD ── */
+function parseCard(title) {
+  // Volume : Nx ou N x ou N véh...
+  const volM = title.match(/(\d+)\s*[xX×]/);
+  const vol = volM ? parseInt(volM[1]) : 1;
+  // CA : nombre suivi de € ou EUR (ex: 1200€, 25 200€, 25,200€)
+  const caM = title.match(/([\d\s,\.]+)\s*€/);
+  let ca = null;
+  if(caM) {
+    ca = parseMoney(caM[1]);
+    if(ca < 10) ca = null; // trop petit, probablement pas un CA
+  }
+  return {vol, ca, title};
 }
 
-function renderPipeline({ lists, cards }) {
-  // Map listId → config colonne
+/* ── RENDER PIPELINE ── */
+function renderPipeline({lists, cards}, sheetData) {
+  // Map listId → col config
   const listMap = {};
   lists.forEach(l => {
-    const cfg = matchCol(l.name);
-    if (cfg) listMap[l.id] = { ...cfg, name: l.name, cards: [] };
+    const cfg = matchPipeCol(l.name);
+    if(cfg) listMap[l.id] = {...cfg, listName:l.name, cards:[]};
   });
-
-  // Distribue les cartes
+  // Distribue cartes
+  let noCaCount = 0;
   cards.forEach(c => {
-    if (listMap[c.idList]) {
-      const vol = extractVol(c.name);
-      listMap[c.idList].cards.push({ title: c.name, vol });
-    }
+    if(!listMap[c.idList]) return;
+    const parsed = parseCard(c.name);
+    if(parsed.ca === null) noCaCount++;
+    listMap[c.idList].cards.push(parsed);
   });
 
   const cols = Object.values(listMap);
-  const totalVol = cols.reduce((s,c)=>s+c.cards.reduce((ss,cc)=>ss+cc.vol,0),0);
 
-  // KPIs
-  const getVol = key => { const c = cols.find(c=>c.key===key); return c ? c.cards.reduce((s,cc)=>s+cc.vol,0) : 0; };
-  set('p-total', totalVol);
-  set('p-confirmed', getVol('confirmed'));
-  set('p-bacrouge', getVol('bacrouge'));
-  set('p-livres-enc', getVol('livres-enc'));
-  set('p-problem', getVol('problem'));
-  set('p-close', getVol('close'));
-  set('pipe-badge', totalVol + ' vh');
+  // KPIs tréso
+  const rows26 = sheetData?.byYear[2026] || [];
+  const caAcquis = rows26.filter(r=>!r.pending).reduce((s,r)=>s+r.ca,0);
+  const volAcquis = rows26.filter(r=>!r.pending).length;
+  const caPending = rows26.filter(r=>r.pending).reduce((s,r)=>s+r.ca,0);
+  const volPending = rows26.filter(r=>r.pending).length;
+
+  const confirmedCol = cols.find(c=>c.key==='confirmed');
+  const caTuyau = confirmedCol ? confirmedCol.cards.reduce((s,c)=>s+(c.ca||0),0) : 0;
+  const volTuyau = confirmedCol ? confirmedCol.cards.reduce((s,c)=>s+c.vol,0) : 0;
+
+  set('t-acquis', fmt(caAcquis));
+  set('t-acquis-sub', volAcquis+' véhicules livrés & encaissés');
+  set('t-pending', fmt(caPending));
+  set('t-pending-sub', volPending+' véhicules');
+  set('t-pipe', fmt(caTuyau));
+  set('t-pipe-sub', volTuyau+' véhicules confirmés');
+
+  const totalVol = cols.reduce((s,c)=>s+c.cards.reduce((ss,cc)=>ss+cc.vol,0),0);
+  set('pipe-badge', totalVol+' vh');
+  if(noCaCount>0) set('pipe-no-ca', noCaCount+' carte(s) sans montant');
 
   // Funnel
-  const funnel = el('funnel-wrap'); funnel.innerHTML = '';
-  const maxVol = Math.max(...cols.map(c=>c.cards.reduce((s,cc)=>s+cc.vol,0)), 1);
-  cols.forEach(c => {
-    const vol = c.cards.reduce((s,cc)=>s+cc.vol,0);
-    const pct = Math.round(vol/maxVol*100);
-    funnel.innerHTML += `<div class="funnel-row">
-      <div class="funnel-label" title="${c.name}">${c.label}</div>
-      <div class="funnel-bar-bg">
-        <div class="funnel-bar" style="width:${pct}%;background:${c.barColor};opacity:.8;">${vol > 0 ? vol+' vh' : ''}</div>
-      </div>
-      <div class="funnel-val">${vol} vh</div>
+  const funnel=el('funnel-wrap'); funnel.innerHTML='';
+  const maxVol=Math.max(...cols.map(c=>c.cards.reduce((s,cc)=>s+cc.vol,0)),1);
+  cols.forEach(c=>{
+    const vol=c.cards.reduce((s,cc)=>s+cc.vol,0);
+    const ca=c.cards.reduce((s,cc)=>s+(cc.ca||0),0);
+    const pct=Math.round(vol/maxVol*100);
+    funnel.innerHTML+=`<div class="funnel-row">
+      <div class="funnel-label">${c.label}</div>
+      <div class="funnel-bar-bg"><div class="funnel-bar" style="width:${Math.max(pct,2)}%;background:${c.color};opacity:.8;">${vol>0?vol+' vh':''}</div></div>
+      <div class="funnel-val">${vol} vh${ca>0?' · '+fmt(ca):''}</div>
     </div>`;
   });
 
   // Colonnes détail
-  const pipeEl = el('pipeline-cols'); pipeEl.innerHTML = '';
-  cols.forEach(c => {
-    const vol = c.cards.reduce((s,cc)=>s+cc.vol,0);
-    const cardsHtml = c.cards.slice(0,8).map(cc =>
-      `<div class="pipeline-card">
-        <div class="card-vol">${cc.vol} vh</div>
-        <div class="card-name">${cc.title.replace(/^\d+\s*[xX]\s*/,'').slice(0,40)}</div>
-      </div>`
-    ).join('');
-    pipeEl.innerHTML += `<div class="pipeline-col">
-      <div class="pipeline-col-title" style="color:${c.barColor}">${c.label}</div>
-      <div class="pipeline-kpi">${vol}</div>
-      <div class="pipeline-sub">${c.cards.length} deal(s)</div>
+  const pipeEl=el('pipeline-cols'); pipeEl.innerHTML='';
+  cols.forEach(c=>{
+    const vol=c.cards.reduce((s,cc)=>s+cc.vol,0);
+    const ca=c.cards.reduce((s,cc)=>s+(cc.ca||0),0);
+    const cardsHtml=c.cards.map(cc=>{
+      const caStr = cc.ca!=null ? fmt(cc.ca) : '<span class="pcard-no-ca">montant ?</span>';
+      const tooltip = encodeURIComponent(cc.title);
+      return `<div class="pcard" data-tip="${tooltip}"
+        onmouseenter="showTip(event,this)" onmouseleave="hideTip()">
+        <div class="pcard-main">
+          <span class="pcard-vol">${cc.vol}vh</span>
+          <span class="pcard-sep">—</span>
+          ${cc.ca!=null?`<span class="pcard-ca">${fmt(cc.ca)}</span>`:caStr}
+        </div>
+      </div>`;
+    }).join('');
+    pipeEl.innerHTML+=`<div class="pipeline-col">
+      <div class="pipeline-col-title" style="color:${c.color}">${c.label}</div>
+      <div class="pipeline-col-kpi">${vol}</div>
+      <div class="pipeline-col-ca" style="color:${c.color}">${ca>0?fmt(ca):'—'}</div>
+      <div class="pipeline-col-sub">${c.cards.length} deal(s)</div>
+      <div class="pipeline-divider"></div>
       <div class="pipeline-cards">${cardsHtml}</div>
     </div>`;
   });
 }
 
+/* ── TOOLTIP ── */
+function showTip(e, el) {
+  const tip=document.getElementById('tooltip');
+  const title=decodeURIComponent(el.dataset.tip);
+  tip.innerHTML=`<div class="tooltip-title">${title}</div>`;
+  tip.style.display='block';
+  moveTip(e);
+  el.addEventListener('mousemove', moveTip);
+}
+function moveTip(e) {
+  const tip=document.getElementById('tooltip');
+  const x=e.clientX+14, y=e.clientY-10;
+  tip.style.left=(x+tip.offsetWidth>window.innerWidth?x-tip.offsetWidth-20:x)+'px';
+  tip.style.top=y+'px';
+}
+function hideTip() {
+  document.getElementById('tooltip').style.display='none';
+}
+
 /* ── RENDER YEAR ── */
 function renderYear(y) {
-  if (!ALL_SHEET) return;
-  const rows = ALL_SHEET.byYear[y]||[];
-  const prevRows = ALL_SHEET.byYear[y-1]||[];
-  const isCurrentYear = y === new Date().getFullYear();
-  const now = new Date();
-  const curMonthKey = String(now.getMonth()+1).padStart(2,'0')+'/'+y;
-  const completeRows = isCurrentYear ? rows.filter(r=>r.month!==curMonthKey) : rows;
-  const completeMonths = [...new Set(completeRows.map(r=>r.month))];
-  const caTotal = rows.reduce((s,r)=>s+r.ca,0);
-  const volTotal = rows.length;
-  const caComplete = completeRows.reduce((s,r)=>s+r.ca,0);
-  const nbComplete = completeMonths.length;
-  const proj = isCurrentYear && nbComplete>0 ? Math.round(caComplete/nbComplete*12) : caTotal;
-  const pendingRows = rows.filter(r=>r.pending);
-  const caPending = pendingRows.reduce((s,r)=>s+r.ca,0);
-  const byM = groupBy(rows,'month');
-  let bestM='', bestCA=0;
-  Object.entries(byM).forEach(([m,arr])=>{ const ca=arr.reduce((s,r)=>s+r.ca,0); if(ca>bestCA){bestCA=ca;bestM=m;} });
-  const vnRows=rows.filter(r=>r.type==='VN'), voRows=rows.filter(r=>r.type==='VO');
+  if(!ALL_SHEET) return;
+  const rows=ALL_SHEET.byYear[y]||[];
+  const prevRows=ALL_SHEET.byYear[y-1]||[];
+  const isNow=y===new Date().getFullYear();
+  const curMonthKey=String(new Date().getMonth()+1).padStart(2,'0')+'/'+y;
+  const completeRows=isNow?rows.filter(r=>r.month!==curMonthKey):rows;
+  const completeMonths=[...new Set(completeRows.map(r=>r.month))];
+  const caTotal=rows.reduce((s,r)=>s+r.ca,0);
+  const volTotal=rows.length;
+  const caComplete=completeRows.reduce((s,r)=>s+r.ca,0);
+  const nbComplete=completeMonths.length;
+  const proj=isNow&&nbComplete>0?Math.round(caComplete/nbComplete*12):caTotal;
+  const pendingRows=rows.filter(r=>r.pending);
+  const caPending=pendingRows.reduce((s,r)=>s+r.ca,0);
+  const byM=groupBy(rows,'month');
+  let bestM='',bestCA=0;
+  Object.entries(byM).forEach(([m,arr])=>{const ca=arr.reduce((s,r)=>s+r.ca,0);if(ca>bestCA){bestCA=ca;bestM=m;}});
+  const vnR=rows.filter(r=>r.type==='VN'),voR=rows.filter(r=>r.type==='VO');
   const MONTHS=['01','02','03','04','05','06','07','08','09','10','11','12'];
-  const series=MONTHS.map(m=>{const arr=byM[m+'/'+y]||[];return arr.length?arr.reduce((s,r)=>s+r.ca,0):null;});
-  const seriesPrev=MONTHS.map(m=>{const arr=groupBy(prevRows,'month')[m+'/'+(y-1)]||[];return arr.length?arr.reduce((s,r)=>s+r.ca,0):null;});
-  const byCli=groupBy(rows,'customer');
-  const topClients=Object.entries(byCli).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,8);
-  const bySup=groupBy(rows,'supplier');
-  const topSuppliers=Object.entries(bySup).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,8);
-  const byBrand={};
-  rows.forEach(r=>{const k=r.brand+'|'+(r.model||'—');if(!byBrand[k])byBrand[k]={vol:0,ca:0};byBrand[k].vol++;byBrand[k].ca+=r.ca;});
-  const topBrands=Object.entries(byBrand).map(([k,v])=>({brand:k.split('|')[0],model:k.split('|')[1],...v})).sort((a,b)=>b.ca-a.ca).slice(0,12);
-  const encByCli=groupBy(pendingRows,'customer');
-  const encBySup=groupBy(pendingRows,'supplier');
-  const encByBrand={};
-  pendingRows.forEach(r=>{const k=r.brand+'|'+(r.model||'—');if(!encByBrand[k])encByBrand[k]={vol:0,ca:0};encByBrand[k].vol++;encByBrand[k].ca+=r.ca;});
-  const encClients=Object.entries(encByCli).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,6);
-  const encSuppliers=Object.entries(encBySup).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,6);
-  const encBrands=Object.entries(encByBrand).map(([k,v])=>({brand:k.split('|')[0],model:k.split('|')[1],...v})).sort((a,b)=>b.ca-a.ca).slice(0,6);
+  const series=MONTHS.map(m=>{const a=byM[m+'/'+y]||[];return a.length?a.reduce((s,r)=>s+r.ca,0):null;});
+  const seriesP=MONTHS.map(m=>{const a=groupBy(prevRows,'month')[m+'/'+(y-1)]||[];return a.length?a.reduce((s,r)=>s+r.ca,0):null;});
+  const byCli=groupBy(rows,'customer'),bySup=groupBy(rows,'supplier');
+  const topC=Object.entries(byCli).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,8);
+  const topS=Object.entries(bySup).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,8);
+  const byBr={};rows.forEach(r=>{const k=r.brand+'|'+(r.model||'—');if(!byBr[k])byBr[k]={vol:0,ca:0};byBr[k].vol++;byBr[k].ca+=r.ca;});
+  const topBr=Object.entries(byBr).map(([k,v])=>({brand:k.split('|')[0],model:k.split('|')[1],...v})).sort((a,b)=>b.ca-a.ca).slice(0,12);
+  const encC=groupBy(pendingRows,'customer'),encS=groupBy(pendingRows,'supplier'),encBr={};
+  pendingRows.forEach(r=>{const k=r.brand+'|'+(r.model||'—');if(!encBr[k])encBr[k]={vol:0,ca:0};encBr[k].vol++;encBr[k].ca+=r.ca;});
 
-  // Impayés
   const banner=el('impaye-banner');
-  if(y===2025){const imp=rows.filter(r=>r.pending);const caImp=imp.reduce((s,r)=>s+r.ca,0);if(caImp>0){set('impaye-txt',`${imp.length} véhicule(s) non encaissé(s) en 2025 — ${fmt(caImp)} considérés impayés`);banner.style.display='flex';}else{banner.style.display='none';}}else{banner.style.display='none';}
+  if(y===2025&&pendingRows.length>0){set('impaye-txt',pendingRows.length+' vh non encaissé(s) en 2025 — '+fmt(caPending)+' impayés');banner.style.display='flex';}
+  else banner.style.display='none';
 
-  set('k-year-lbl',isCurrentYear?'YTD':String(y));
-  set('k-ca',fmt(caTotal)); set('k-vol',volTotal+' véhicules');
-  set('k-proj-lbl',isCurrentYear?'Projection annuelle':'CA total '+y);
-  set('k-proj',fmt(proj)); set('k-proj-sub',isCurrentYear?`base ${nbComplete} mois complets`:volTotal+' véhicules');
-  set('k-enc',fmt(caPending)); set('k-enc-vol',pendingRows.length+' opération(s)');
-  set('k-marge',fmt(volTotal>0?Math.round(caTotal/volTotal):0)); set('k-marge-sub',String(y));
-  set('k-best',fmt(bestCA)); set('k-best-sub',bestM||'—');
-  set('split-year-lbl',isCurrentYear?'YTD '+y:String(y));
-  set('top-cli-lbl',isCurrentYear?'YTD '+y:String(y));
-  set('top-sup-lbl',isCurrentYear?'YTD '+y:String(y));
-  set('brand-lbl',isCurrentYear?'YTD '+y:String(y));
+  set('k-year-lbl',isNow?'YTD':String(y));
+  set('k-ca',fmt(caTotal));set('k-vol',volTotal+' véhicules');
+  set('k-proj-lbl',isNow?'Projection annuelle':'CA total '+y);
+  set('k-proj',fmt(proj));set('k-proj-sub',isNow?'base '+nbComplete+' mois complets':volTotal+' véhicules');
+  set('k-enc',fmt(caPending));set('k-enc-vol',pendingRows.length+' opération(s)');
+  set('k-marge',fmt(volTotal>0?Math.round(caTotal/volTotal):0));set('k-marge-sub',String(y));
+  set('k-best',fmt(bestCA));set('k-best-sub',bestM||'—');
+  set('split-lbl',isNow?'YTD '+y:String(y));
+  set('top-cli-lbl',isNow?'YTD '+y:String(y));
+  set('top-sup-lbl',isNow?'YTD '+y:String(y));
+  set('brand-lbl',isNow?'YTD '+y:String(y));
   set('enc-total-lbl',fmt(caPending)+' · '+pendingRows.length+' vh');
-  const tot=(vnRows.length+voRows.length)||1;
-  const vnP=Math.round(vnRows.length/tot*100),voP=100-vnP;
-  set('s-vn',vnRows.length);set('s-vo',voRows.length);
-  set('s-vn-ca',fmt(vnRows.reduce((s,r)=>s+r.ca,0)));set('s-vo-ca',fmt(voRows.reduce((s,r)=>s+r.ca,0)));
+  const tot=(vnR.length+voR.length)||1;
+  const vnP=Math.round(vnR.length/tot*100),voP=100-vnP;
+  set('s-vn',vnR.length);set('s-vo',voR.length);
+  set('s-vn-ca',fmt(vnR.reduce((s,r)=>s+r.ca,0)));set('s-vo-ca',fmt(voR.reduce((s,r)=>s+r.ca,0)));
   set('s-vn-pct',vnP+'%');set('s-vo-pct',voP+'%');
   el('split-vn').style.width=vnP+'%';el('split-vn').textContent=vnP+'% VN';
   el('split-vo').style.width=voP+'%';el('split-vo').textContent=voP+'% VO';
   set('chart-sub','vs '+(y-1));
   if(chartCA)chartCA.destroy();
-  const lbls=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
-  chartCA=new Chart(el('cCA'),{type:'line',data:{labels:lbls,datasets:[
-    {label:String(y-1),data:seriesPrev,borderColor:'rgba(139,143,168,0.35)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2,tension:.35,fill:false,spanGaps:false,borderDash:[4,3]},
+  chartCA=new Chart(el('cCA'),{type:'line',data:{labels:['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'],datasets:[
+    {label:String(y-1),data:seriesP,borderColor:'rgba(139,143,168,0.35)',backgroundColor:'transparent',borderWidth:1.5,pointRadius:2,tension:.35,fill:false,spanGaps:false,borderDash:[4,3]},
     {label:String(y),data:series,borderColor:'#3b8df5',backgroundColor:'rgba(59,141,245,0.08)',borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#3b8df5',tension:.35,fill:true,spanGaps:false}
   ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,labels:{color:'#8a8fa8',font:{size:11,family:'DM Mono'},boxWidth:12,padding:16}},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>' '+ctx.dataset.label+' : '+fmtN(ctx.raw)+' €'}}},scales:{x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#454a5e',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#454a5e',font:{size:10},callback:v=>(v>=1000?(v/1000).toFixed(0)+'k':v)+'€'}}}}});
-  renderBars('bar-clients',topClients,'#3b8df5');
-  renderBars('bar-suppliers',topSuppliers,'#4caf7d');
-  renderEncBars('enc-clients',encClients);
-  renderEncBars('enc-suppliers',encSuppliers);
-  renderEncBrandBars('enc-brands',encBrands);
+
+  renderBars('bar-clients',topC,'#3b8df5');
+  renderBars('bar-suppliers',topS,'#4caf7d');
+  renderEncBars('enc-clients',Object.entries(encC).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,6));
+  renderEncBars('enc-suppliers',Object.entries(encS).map(([n,a])=>({name:n,vol:a.length,ca:a.reduce((s,r)=>s+r.ca,0)})).sort((a,b)=>b.ca-a.ca).slice(0,6));
+  renderEncBars('enc-brands',Object.entries(encBr).map(([k,v])=>({name:k.replace('|',' '),vol:v.vol,ca:v.ca})).sort((a,b)=>b.ca-a.ca).slice(0,6));
   const tbody=el('brand-tbody');tbody.innerHTML='';
-  topBrands.forEach(b=>{const moy=b.vol>0?Math.round(b.ca/b.vol):0;const pct=caTotal>0?(b.ca/caTotal*100).toFixed(1):0;tbody.innerHTML+=`<tr><td><span class="bname">${b.brand}</span> <span class="bmodel">${b.model}</span></td><td>${b.vol}</td><td>${fmt(b.ca)}</td><td style="color:var(--text3)">${fmt(moy)}</td><td><span class="pill pill-blue">${pct}%</span></td></tr>`;});
+  topBr.forEach(b=>{const moy=b.vol>0?Math.round(b.ca/b.vol):0;const pct=caTotal>0?(b.ca/caTotal*100).toFixed(1):0;tbody.innerHTML+=`<tr><td><span class="bname">${b.brand}</span> <span class="bmodel">${b.model}</span></td><td>${b.vol}</td><td>${fmt(b.ca)}</td><td style="color:var(--text3)">${fmt(moy)}</td><td><span class="pill pill-blue">${pct}%</span></td></tr>`;});
 }
 
-function renderBars(id,items,color){const wrap=el(id);wrap.innerHTML='';if(!items.length){wrap.innerHTML='<div style="font-size:12px;color:var(--text3);padding:8px 0;">Aucune donnée</div>';return;}const max=items[0]?.ca||1;items.forEach(({name,vol,ca})=>{const p=Math.round(ca/max*100);wrap.innerHTML+=`<div class="bar-row"><div class="bar-name" title="${name}">${name}</div><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${color};opacity:.75;"></div></div><div class="bar-vol">${vol}vh</div><div class="bar-val">${fmt(ca)}</div></div>`;});}
-function renderEncBars(id,items){const wrap=el(id);wrap.innerHTML='';if(!items.length){wrap.innerHTML='<div style="font-size:12px;color:var(--green);padding:4px 0;">✓ Tout encaissé</div>';return;}const max=items[0]?.ca||1;items.forEach(({name,vol,ca})=>{const p=Math.round(ca/max*100);wrap.innerHTML+=`<div class="bar-row"><div class="bar-name" title="${name}">${name}</div><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:#e05555;opacity:.7;"></div></div><div class="bar-vol">${vol}vh</div><div class="bar-val">${fmt(ca)}</div></div>`;});}
-function renderEncBrandBars(id,items){const wrap=el(id);wrap.innerHTML='';if(!items.length){wrap.innerHTML='<div style="font-size:12px;color:var(--green);padding:4px 0;">✓ Tout encaissé</div>';return;}const max=items[0]?.ca||1;items.forEach(({brand,model,vol,ca})=>{const p=Math.round(ca/max*100);const name=brand+(model&&model!=='—'?' '+model:'');wrap.innerHTML+=`<div class="bar-row"><div class="bar-name" title="${name}">${name}</div><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:#e05555;opacity:.7;"></div></div><div class="bar-vol">${vol}vh</div><div class="bar-val">${fmt(ca)}</div></div>`;});}
+function renderBars(id,items,color){const w=el(id);w.innerHTML='';if(!items.length){w.innerHTML='<div style="font-size:12px;color:var(--text3);padding:8px 0;">Aucune donnée</div>';return;}const max=items[0]?.ca||1;items.forEach(({name,vol,ca})=>{const p=Math.round(ca/max*100);w.innerHTML+=`<div class="bar-row"><div class="bar-name" title="${name}">${name}</div><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:${color};opacity:.75;"></div></div><div class="bar-vol">${vol}vh</div><div class="bar-val">${fmt(ca)}</div></div>`;});}
+function renderEncBars(id,items){const w=el(id);w.innerHTML='';if(!items.length){w.innerHTML='<div style="font-size:12px;color:var(--green);padding:4px 0;">✓ Tout encaissé</div>';return;}const max=items[0]?.ca||1;items.forEach(({name,vol,ca})=>{const p=Math.round(ca/max*100);w.innerHTML+=`<div class="bar-row"><div class="bar-name" title="${name}">${name}</div><div class="bar-track"><div class="bar-fill" style="width:${p}%;background:#e05555;opacity:.7;"></div></div><div class="bar-vol">${vol}vh</div><div class="bar-val">${fmt(ca)}</div></div>`;});}
 
-/* ── UTILS ── */
 function groupBy(arr,key){return arr.reduce((acc,r)=>{const k=r[key];if(!acc[k])acc[k]=[];acc[k].push(r);return acc;},{});}
 function parseMoney(s){if(!s)return 0;return parseFloat(String(s).replace(/[€\s]/g,'').replace(/\./g,'').replace(',','.'))||0;}
 function fmt(n){if(!n&&n!==0)return'—';return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);}
@@ -749,11 +722,7 @@ function set(id,v){const e=el(id);if(e)e.textContent=v;}
 setInterval(()=>{if(el('app').style.display!=='none')loadAll();},5*60*1000);
 
 loadConfig();
-if(CFG.sheetId&&CFG.apiKey){
-  el('cfg-overlay').style.display='none';
-  el('app').style.display='block';
-  loadAll();
-}
+if(CFG.sheetId&&CFG.apiKey){el('cfg-overlay').style.display='none';el('app').style.display='block';loadAll();}
 </script>
 </body>
 </html>
